@@ -10,8 +10,8 @@ ArrayList,LinkedList 는 데이터 타입만 지정해주면된다.
 
 ``` cs
 //Array
-int[10] intArr;
-string[5] stringArr;
+int[] intArr = new int[10];
+string[] stringArr = new string[5];
 
 //ArrayList
 List<int> intList = new List<int>();

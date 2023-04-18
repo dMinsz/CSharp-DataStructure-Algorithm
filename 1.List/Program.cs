@@ -14,7 +14,7 @@
         public void Array() 
         {
             int[] arr = new int[100];// int 형 100개의 자료구조 만듬
-
+          
             //인덱스를 통한 접근
             arr[0] = 1;
             int value = arr[0];
