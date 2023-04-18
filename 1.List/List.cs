@@ -8,7 +8,7 @@ namespace DataStructure
 {
     internal class List<T>
     {
-        private const int DefaultCapacity = 4;
+        private const int DefaultCapacity = 10;
 
         private T[] items;
         private int size;
