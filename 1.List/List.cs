@@ -29,6 +29,7 @@ namespace DataStructure
         public int Capacity { get { return items.Length; } }
         public int Count { get { return size; } }
 
+        //Indexing
         public T this[int index]
         {
             get
@@ -54,18 +55,21 @@ namespace DataStructure
                 items[size++] = item;
             }
             else
-            {
-                Grow();
+            {   // 크기가 더 작으면
+                Grow(); // 크기를 늘려주고
+                items[size++] = item;//값을 넣어준다.
             }
 
         }
 
+        //값을 비워주는 함수
         public void Clear()
         {
-            items = new T[DefaultCapacity];
+            items = new T[DefaultCapacity];//기본값으로 다시 설정
             size = 0;
         }
 
+        //match 에 맞는 값을 찾아주는 함수
         public T? Find(Predicate<T> match)
         {
             if (match == null) throw new ArgumentNullException();
@@ -76,7 +80,7 @@ namespace DataStructure
                     return items[i];
             }
 
-            return default(T);
+            return default(T); // 만약 찾지못했다면 기본값으로 준다.
         }
 
         public int FindIndex(Predicate<T> match)
@@ -93,7 +97,7 @@ namespace DataStructure
             if (match == null)
                 throw new ArgumentNullException();
 
-            int endIndex = startIndex + count;
+            int endIndex = startIndex + count;//현재 가지고있는 요소까지만 반복하기위함
             for (int i = startIndex; i < endIndex; i++)
             {
                 if (match(items[i])) return i;
@@ -108,7 +112,7 @@ namespace DataStructure
             if (match == null)
                 throw new ArgumentNullException();
 
-            T result = default(T);
+            T result = default(T); // 만약 찾지 못하면 기본값을 리턴
 
             for (int i = 0; i < size; i++)
             {
@@ -127,7 +131,7 @@ namespace DataStructure
             if (match == null)
                 throw new ArgumentNullException();
 
-            int result = -1;
+            int result = -1; // 만약 찾지 못하면 -1을 리턴
 
             for (int i = 0; i < size; i++)
             {
@@ -146,7 +150,7 @@ namespace DataStructure
             if (lastIndex < 0 || lastIndex > size)
                 throw new ArgumentOutOfRangeException();
 
-            int result = -1;
+            int result = -1;// 만약 찾지 못하면 -1을 리턴
 
             for (int i = 0; i <= lastIndex; i++)
             {
@@ -167,7 +171,7 @@ namespace DataStructure
             if (match == null)
                 throw new ArgumentNullException();
 
-            int result = -1;
+            int result = -1;// 만약 찾지 못하면 -1을 리턴
 
             for (int i = startIndex; i <= lastIndex; i++)
             {
@@ -184,6 +188,7 @@ namespace DataStructure
             return Array.IndexOf(items, item, 0, size);
         }
 
+        //요소 삭제함수
         public bool Remove(T item)
         {
             int index = IndexOf(item);
@@ -202,11 +207,14 @@ namespace DataStructure
 
             size--;
             Array.Copy(items, index + 1, items, index, size - index);
+            //배열의 삭제는 복사를 통해서 이루어진다.
+            //삭제 할 위치 다음 위치 부터 끝까지 한칸씩 앞으로 이동된것과 같은 효과이다.
         }
 
+        // capacity 가 모자를 때 배열의 크기를 늘려주는 함수
         private void Grow()
         {
-            int newCapacity = items.Length * 2;
+            int newCapacity = items.Length * 2; // 임의로 2배로 늘려준다.
             T[] newItems = new T[newCapacity];
             Array.Copy(items, 0, newItems, 0, size);
             items = newItems;
@@ -279,11 +287,6 @@ namespace DataStructure
                     result.Add(items[i]);
             }
 
-            if (result.Count > 0)
-            {
-                return result;
-            }
-
             return result;
         }
 
@@ -303,7 +306,7 @@ namespace DataStructure
 
             if (size <= 0)
             {
-                return new T[0];
+                return new T[0]; // 요소가없으면 빈 T[] 를 반환
             }
 
             T[] result = new T[size];
