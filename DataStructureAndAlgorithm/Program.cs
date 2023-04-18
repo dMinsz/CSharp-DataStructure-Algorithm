@@ -52,6 +52,8 @@
          * 시간복잡도 : 알고리즘의 시간적 자원 소모량
          * 공간복잡도 : 알고리즘의 공간적 자원 소모량
          * 
+         * 대부분 시간복잡도, 공간복잡도가 평가 대상이다.
+         * 
          * <Big-O 표기법>
          * 알고리즘의 복잡도를 나타내는 점근표기법
          * 가장 높은 차수의 계수와 나머지 모든 항을 제거하고 표기
@@ -88,7 +90,7 @@
         // n = 1000		    1	     1000	1,000,000
         // Big-O		 O(1)	     O(n)	   O(n^2)
 
-
+        // <Good> O(1) > O(logn) > O(n) > O(nlogn) > O(n^2) > O(n^3) > O(2^n) <Bad>
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, Algorithm and Data Structure");
