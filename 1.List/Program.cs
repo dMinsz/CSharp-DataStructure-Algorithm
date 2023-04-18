@@ -1,4 +1,4 @@
-﻿namespace _1.List
+﻿namespace DataStructure.List
 {
     internal class Program
     {
@@ -39,11 +39,10 @@
          * 예를 들어 8번째 자리는 (첫주소값 + (4byte*7)) 를 해주면 된다.
          * 
          * 즉 이러한 접근을 간단하게 만들어준게 인덱스이다.
-         * 
-         * 참고 : 
          */
 
-        //c 스타일로 찾아내는 방법
+        //참고 사항
+        //c 스타일로 주소값으로 인덱스의 값을 찾아내는 함수
         public static int? ArrayIndex(ref int[] arr, int index)
         {
             int? result;
@@ -111,7 +110,7 @@
             Console.WriteLine("배열{0}번째의 값 : {1}",1, ArrayIndex(ref arr,1));
 
             //따로만든 리스트 사용
-            _1.List.List<string> list = new _1.List.List<string>();
+            DataStructure.List<string> list = new DataStructure.List<string>();
 
             list.Add("1번 데이터");
             list.Add("2번 데이터");
