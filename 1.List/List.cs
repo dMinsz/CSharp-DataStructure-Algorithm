@@ -35,14 +35,14 @@ namespace DataStructure
             get
             {
                 if (index < 0 || index >= size)
-                    throw new IndexOutOfRangeException();
+                    throw new ArgumentOutOfRangeException();
 
                 return items[index];
             }
             set
             {
                 if (index < 0 || index >= size)
-                    throw new IndexOutOfRangeException();
+                    throw new ArgumentOutOfRangeException();
 
                 items[index] = value;
             }
