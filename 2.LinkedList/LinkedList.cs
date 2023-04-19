@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -50,9 +52,11 @@ namespace DataStructure
         }
     }
 
-
+    //디버그에 보여주려고 만듬
+    [DebuggerTypeProxy(typeof(LinkedList<>.DebugView))]
     public class LinkedList<T>
     {
+
         private LinkedListNode<T>? head; // 가장앞에있는 노드
         private LinkedListNode<T>? tail; // 끝에 있는 노드
         private int count; // 총 노드 수
@@ -61,6 +65,8 @@ namespace DataStructure
         public LinkedListNode<T>? First { get { return this?.head; } }
         public LinkedListNode<T>? Last { get { return this?.tail; } }
         public int Count { get { return count; } }
+
+        public bool IsReadOnly => throw new NotImplementedException();
 
         public LinkedList()
         {//기본 생성자
@@ -186,8 +192,20 @@ namespace DataStructure
         //연결리스트 비우기
         public void Clear()
         {
+
+            //리스트에 하나라도 노드가있을시
+            LinkedListNode<T>? current = head;
+            while (current != null)
+            {
+                LinkedListNode<T> temp = current;
+                current = current.Next;
+                temp.list = null;
+                temp.next = null;
+                temp.prev = null; // 다음 노드에 연결을 모두 끊어버린다.
+            }
+
             this.head = null;
-            this.tail = null;
+            this.tail = null; // 이미 다음노드의 연결을 모두 끊어서 해줄 필요는 없다.
             count = 0;
         }
 
@@ -281,7 +299,7 @@ namespace DataStructure
         }
 
         // 첫번째 노드 삭제
-        public void RemoveFirst() 
+        public void RemoveFirst()
         {
             if (head == null)
                 throw new InvalidOperationException(); // head가 null이면 실행불가.
@@ -299,7 +317,7 @@ namespace DataStructure
         }
 
         //testCode
-        public void Print() 
+        public void Print()
         {
             LinkedListNode<T>? node = head;
 
@@ -323,8 +341,99 @@ namespace DataStructure
             }
 
             Console.WriteLine("{0}", node.Item);
-        
+
+        }
+        public void CopyTo(T[] array, int index)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
+            if (index < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            if (index > array.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            if (array.Length - index < Count)
+            {
+                throw new ArgumentException();
+            }
+
+            LinkedListNode<T>? node = head;
+            if (node != null)
+            {
+                do
+                {
+                    array[index++] = node!.Item;
+                    node = node.next;
+                } while (node != head);
+            }
         }
 
+        public T[] ToArray() 
+        {
+            LinkedListNode<T> newNode = head;
+            T[] result = new T[this.count];
+
+            if (count <= 0)
+            {
+                return result; // 카운트가없으면 그냥리턴
+            }
+
+
+            if (newNode == null)
+            {
+                return result; // head가 null이면 그냥리턴
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                result[i] = newNode.Item;
+                newNode = newNode.next;
+            }
+           
+            return result;
+        }
+
+        internal sealed unsafe class DebugView
+        {
+            private readonly LinkedList<T> _linkedList;
+
+            public DebugView(LinkedList<T> linkedList)
+            {
+                _linkedList = linkedList;
+            }
+
+            public int Count => _linkedList.Count;
+
+            [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+            public T[] Items
+            {
+                get
+                {
+                    ref readonly var linkedList = ref _linkedList;
+
+                    //var count = linkedList.count;
+                    //var items = GC.AllocateUninitializedArray<T>(linkedList.count);
+
+                    //linkedList.CopyTo(linkedList, count);
+
+                    var items = linkedList.ToArray();
+                    return items;
+                }
+            }
+        }
+
+
     }
+ 
+
+
+
 }
