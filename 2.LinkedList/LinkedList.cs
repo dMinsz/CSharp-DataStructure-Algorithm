@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -80,6 +81,7 @@ namespace DataStructure
         //node 기준으로 이전 위치에 새로운 노드 추가하는 함수
         private void InsertNodeBefore(LinkedListNode<T> node, LinkedListNode<T> newNode)
         {
+            //노드연결구조바꾸기
             newNode.next = node;
             newNode.prev = node.prev;
             if (newNode.prev != null)
@@ -200,13 +202,13 @@ namespace DataStructure
         public LinkedListNode<T>? Find(T value)
         {
             LinkedListNode<T>? node = head;
-            EqualityComparer<T> compare = EqualityComparer<T>.Default; // null 체크를 위해 만듬
+            EqualityComparer<T> comparer = EqualityComparer<T>.Default; // null 체크를 위해 만듬
 
             if (value != null)
             {
                 while (node != null)
                 {
-                    if (compare.Equals(node.Item, value))
+                    if (comparer.Equals(node.Item, value))
                     {
                         return node;
                     }
@@ -251,8 +253,9 @@ namespace DataStructure
             if (node.prev != null)
                 node.prev.next = node.next;
 
-            node.next = null;
-            node.prev = null;
+            //굳이 안해도 알아서 GC 가 관리해줌
+            //node.next = null;
+            //node.prev = null;
 
             count--;
         }
@@ -299,19 +302,28 @@ namespace DataStructure
         public void Print() 
         {
             LinkedListNode<T>? node = head;
+
             if (node == null)
             {
                 throw new InvalidOperationException(); // head가 null이면 실행불가.
             }
 
-            do
+            //요소가 하나일때
+            if (node == tail)
+            {
+                Console.WriteLine("{0}", node.Item);
+                return;
+            }
+
+            //요소가 두개이상일때
+            while (node != tail)
             {
                 Console.Write("{0},", node.Item);
                 node = node.Next;
-            } while (node != tail);
+            }
 
             Console.WriteLine("{0}", node.Item);
-
+        
         }
 
     }
