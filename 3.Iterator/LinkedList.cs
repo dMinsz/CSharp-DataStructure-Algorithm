@@ -9,11 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DataStructure
+namespace DataStructure.Iter
 {
     /// 엄밀히 말하면 이중연결리스트이다.
     // 일반적인 연결리스트는 다음 노드 의 참조만 가지고있다.
 
+    #region LinkedListNode
     public class LinkedListNode<T>
     {
         internal LinkedList<T>? list;
@@ -51,11 +52,12 @@ namespace DataStructure
             this.item = value;
         }
     }
+    #endregion
 
     //디버그에 보여주려고 만듬
     [DebuggerDisplay("Count = {Count}")]
     [DebuggerTypeProxy(typeof(LinkedList<>.DebugView))]
-    public class LinkedList<T>
+    public class LinkedList<T> : IEnumerable<T>
     {
 
         private LinkedListNode<T>? head; // 가장앞에있는 노드
@@ -75,7 +77,7 @@ namespace DataStructure
             this.tail = null;
             count = 0;
         }
-
+        #region 멤버 메서드들
         //node 예외 체크
         private void ValidateNode(LinkedListNode<T> node)
         {
@@ -209,7 +211,6 @@ namespace DataStructure
             this.tail = null; // 이미 다음노드의 연결을 모두 끊어서 해줄 필요는 없다.
             count = 0;
         }
-
 
         //해당하는 value 가 있는지 확인하는 함수
         public bool Contains(T value)
@@ -379,7 +380,7 @@ namespace DataStructure
         }
 
         //Linkelist 값들을 Array 형식으로 바꿔준다.
-        public T[] ToArray() 
+        public T[] ToArray()
         {
             LinkedListNode<T> newNode = head;
             T[] result = new T[this.count];
@@ -400,10 +401,90 @@ namespace DataStructure
                 result[i] = newNode.Item;
                 newNode = newNode.next;
             }
-           
+
             return result;
         }
+        #endregion
 
+        #region Enumerator 관련 기능
+        public struct Enumerator : IEnumerator<T>
+        {
+            private LinkedList<T> list;
+            private LinkedListNode<T> node;
+            private int index; // 범위 체크용 으로 사용한다.
+            private T current;
+
+            public T Current { get { return current; } }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (index < 0 || index >= list.Count)
+                        throw new InvalidOperationException();
+                    return Current;
+                }
+            }
+            internal Enumerator(LinkedList<T> list)
+            {
+                this.list = list;
+                this.node = null;
+                this.index = -1;
+                this.current = default(T);
+            }
+
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                if (index < 0) // 처음일때
+                {
+                    node = list.head;
+                    current = node.Item;
+                    index++;
+                    return true;
+                }
+                else if (index < list.Count - 1)
+                {//인덱스가 범위내에 있을때
+                    node = node.next;
+                    current = node.Item;
+                    index++;
+                    return true;
+                }
+                else
+                {//인덱스가 끝났을때
+                    node = null;
+                    current = default(T);
+                    index = list.count;
+                    return false;
+                }
+
+            }
+
+            public void Reset()
+            {
+                node = null;
+                current = default(T);
+                index = -1;
+            }
+        }
+
+
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new Enumerator(this);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new Enumerator(this);
+        }
+        #endregion
+        #region 디버그용 뷰
         //디버그 에 각 요소들을 보여주기위한 클래스
         internal sealed unsafe class DebugView
         {
@@ -426,10 +507,11 @@ namespace DataStructure
                 }
             }
         }
+        #endregion
 
 
     }
- 
+
 
 
 
