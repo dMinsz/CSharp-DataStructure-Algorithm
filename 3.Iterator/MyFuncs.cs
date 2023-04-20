@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataStructure
 {
-    public static class MySort<T> 
+    public static class MyFunc<T> 
     {
+        //배열과 List 의 버블정렬 함수
         public static void Sort(IList<T> list)
         {
             for (int i = 0; i < list.Count; i++)
@@ -25,6 +26,20 @@ namespace DataStructure
             }
 
         }
-       
+
+        //int 형 자료구조의 평균값을 구하는 함수
+        public static int Average(ICollection<int> ints)
+        {
+            int sum = 0;
+
+            foreach (var i in ints) 
+            {
+                sum += i;
+            }
+
+            return sum / ints.Count;
+        }
+
+
     }
 }

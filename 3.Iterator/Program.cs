@@ -135,14 +135,16 @@
             sorttest.Add(2);
             sorttest.Add(6);
             sorttest.Add(1);
-            DataStructure.MySort<int>.Sort(sorttest);
+            DataStructure.MyFunc<int>.Sort(sorttest);
 
             foreach (var item in sorttest)
             {
                 Console.WriteLine(item);
             }
 
-
+            //int 형 자료구조 평균 구하기 함수 테스트
+            int avg = DataStructure.MyFunc<int>.Average(sorttest);
+            Console.WriteLine("해당리스트의 평균값은 : {0}",avg);
         }
     }
 }
