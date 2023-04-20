@@ -327,18 +327,20 @@ namespace DataStructure.Iter
          *   {
          *       Console.WriteLine(iter.Current);
          *   }
+         *   iter.Dispose();
+         *   
          * 반복자는 이런식으로 foreach 를 돌리는데
          * 처음 먼저 MoveNext를 해준다.
          * 즉 -1 부터 시작해줘야한다.
          * 주의: C#의 반복기는 prev 반복자가 기본이다.
          * 유효하지않은 하나의 위치를 지정해줘야하는데 그걸 앞에걸로 지정하는걸 prev 반복자라한다.
-         *  // c에서는 prev 반복자가 아니라 맨뒤에값을 유효하지않은 위치로 지정한 반복자이다.
+         *  // c에서는 prev 반복자가 아니라 맨뒤에값을 유효하지않은 위치로 지정한 반복자(end iterator)이다.
          */
         public struct Enumerator : IEnumerator<T>
         {
             private List<T> list;
             private int index;
-            private T? current;
+            private T current;
             public T Current { get { return current; } }
 
             internal Enumerator(List<T> list)
@@ -358,8 +360,12 @@ namespace DataStructure.Iter
                 }
             }
             //Disposable 관련이라 일단 패스
+            //Dispose 는 foreach 반복이 끝났을때 불리는 함수
             public void Dispose()
-            {}
+            {
+                GC.SuppressFinalize(this);
+                //GC에 정리하라고 알려줌.
+            }
 
             public bool MoveNext()
             {

@@ -75,6 +75,23 @@
             {
                 Console.WriteLine(iter.Current);
             }
+            iter.Dispose();
+
+            DataStructure.Iter.List<int> myList = new DataStructure.Iter.List<int>();
+
+            myList.Add(1);
+            myList.Add(2);
+            myList.Add(3);
+
+            //내가만든 Enumerator 를 사용해본다.
+            IEnumerator<int> myIter = myList.GetEnumerator();
+
+            Console.WriteLine("반복자 사용");
+            while (myIter.MoveNext()) // 반복자의 다음이없으면 false 를 리턴한다.
+            {
+                Console.WriteLine(myIter.Current);
+            }
+            myIter.Dispose();
 
         }
     }
