@@ -81,9 +81,9 @@
             DataStructure.Iter.List<int> myList = new DataStructure.Iter.List<int>();
 
             myList.Add(1);
-            myList.Add(2);
             myList.Add(3);
-
+            myList.Add(2);
+       
             IEnumerator<int> myListIter = myList.GetEnumerator();
 
             Console.WriteLine("리스트에 반복자 사용");
@@ -95,6 +95,7 @@
             myListIter.Dispose();
 
             //foreach 사용해본다
+            Console.WriteLine("리스트에 foreach 사용");
             foreach (var ele in myList)
             {
                 Console.WriteLine(ele);
@@ -125,6 +126,23 @@
             {
                 Console.WriteLine(ele);
             }
+
+            //정렬 테스트코드
+            Console.WriteLine("정렬 해보기");
+            List<int> sorttest = new List<int>();
+            sorttest.Add(10);
+            sorttest.Add(3);
+            sorttest.Add(2);
+            sorttest.Add(6);
+            sorttest.Add(1);
+            DataStructure.MySort<int>.Sort(sorttest);
+
+            foreach (var item in sorttest)
+            {
+                Console.WriteLine(item);
+            }
+
+
         }
     }
 }
