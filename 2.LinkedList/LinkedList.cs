@@ -53,6 +53,7 @@ namespace DataStructure
     }
 
     //디버그에 보여주려고 만듬
+    [DebuggerDisplay("Count = {Count}")]
     [DebuggerTypeProxy(typeof(LinkedList<>.DebugView))]
     public class LinkedList<T>
     {
@@ -343,6 +344,7 @@ namespace DataStructure
             Console.WriteLine("{0}", node.Item);
 
         }
+        //매개변수 array에 LinkedList 의 값을 복사해준다.
         public void CopyTo(T[] array, int index)
         {
             if (array == null)
@@ -376,6 +378,7 @@ namespace DataStructure
             }
         }
 
+        //Linkelist 값들을 Array 형식으로 바꿔준다.
         public T[] ToArray() 
         {
             LinkedListNode<T> newNode = head;
@@ -401,6 +404,7 @@ namespace DataStructure
             return result;
         }
 
+        //디버그 에 각 요소들을 보여주기위한 클래스
         internal sealed unsafe class DebugView
         {
             private readonly LinkedList<T> _linkedList;
@@ -410,7 +414,7 @@ namespace DataStructure
                 _linkedList = linkedList;
             }
 
-            public int Count => _linkedList.Count;
+            //public int Count => _linkedList.Count;
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
             public T[] Items
@@ -418,14 +422,7 @@ namespace DataStructure
                 get
                 {
                     ref readonly var linkedList = ref _linkedList;
-
-                    //var count = linkedList.count;
-                    //var items = GC.AllocateUninitializedArray<T>(linkedList.count);
-
-                    //linkedList.CopyTo(linkedList, count);
-
-                    var items = linkedList.ToArray();
-                    return items;
+                    return linkedList.ToArray();
                 }
             }
         }
