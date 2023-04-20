@@ -87,11 +87,18 @@
             IEnumerator<int> myListIter = myList.GetEnumerator();
 
             Console.WriteLine("리스트에 반복자 사용");
+            
             while (myListIter.MoveNext()) // 반복자의 다음이없으면 false 를 리턴한다.
             {
                 Console.WriteLine(myListIter.Current);
             }
             myListIter.Dispose();
+
+            //foreach 사용해본다
+            foreach (var ele in myList)
+            {
+                Console.WriteLine(ele);
+            }
 
 
             //내가만든 LinkedList 에 Enumerator 를 사용해본다.
@@ -110,6 +117,14 @@
                 Console.WriteLine(myLinkedListIter.Current);
             }
             myLinkedListIter.Dispose();
+
+            Console.WriteLine("연결리스트에 foreach 사용");
+
+            //foreach 사용해본다
+            foreach (var ele in myLinkedList) 
+            {
+                Console.WriteLine(ele);
+            }
         }
     }
 }

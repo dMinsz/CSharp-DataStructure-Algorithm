@@ -411,7 +411,7 @@ namespace DataStructure.Iter
         {
             private LinkedList<T> list;
             private LinkedListNode<T> node;
-            private int index;
+            private int index; // 범위 체크용 으로 사용한다.
             private T current;
 
             public T Current { get { return current; } }
@@ -425,7 +425,7 @@ namespace DataStructure.Iter
                     return Current;
                 }
             }
-            internal Enumerator(LinkedList<T> list) 
+            internal Enumerator(LinkedList<T> list)
             {
                 this.list = list;
                 this.node = null;
@@ -454,7 +454,7 @@ namespace DataStructure.Iter
                     index++;
                     return true;
                 }
-                else 
+                else
                 {//인덱스가 끝났을때
                     node = null;
                     current = default(T);
