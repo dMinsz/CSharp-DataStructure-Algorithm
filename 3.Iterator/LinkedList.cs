@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DataStructure
+namespace DataStructure.Iter
 {
     /// 엄밀히 말하면 이중연결리스트이다.
     // 일반적인 연결리스트는 다음 노드 의 참조만 가지고있다.

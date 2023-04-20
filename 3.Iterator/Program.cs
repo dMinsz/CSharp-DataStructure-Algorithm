@@ -77,22 +77,39 @@
             }
             iter.Dispose();
 
+            //내가만든 List 에 Enumerator 를 사용해본다.
             DataStructure.Iter.List<int> myList = new DataStructure.Iter.List<int>();
 
             myList.Add(1);
             myList.Add(2);
             myList.Add(3);
 
-            //내가만든 Enumerator 를 사용해본다.
-            IEnumerator<int> myIter = myList.GetEnumerator();
+            IEnumerator<int> myListIter = myList.GetEnumerator();
 
-            Console.WriteLine("반복자 사용");
-            while (myIter.MoveNext()) // 반복자의 다음이없으면 false 를 리턴한다.
+            Console.WriteLine("리스트에 반복자 사용");
+            while (myListIter.MoveNext()) // 반복자의 다음이없으면 false 를 리턴한다.
             {
-                Console.WriteLine(myIter.Current);
+                Console.WriteLine(myListIter.Current);
             }
-            myIter.Dispose();
+            myListIter.Dispose();
 
+
+            //내가만든 LinkedList 에 Enumerator 를 사용해본다.
+            DataStructure.Iter.LinkedList<string> myLinkedList= new DataStructure.Iter.LinkedList<string>();
+            myLinkedList.AddLast("First");
+            myLinkedList.AddLast("Second");
+            myLinkedList.AddLast("Third");
+            myLinkedList.AddLast("Fourth");
+
+
+            IEnumerator<string> myLinkedListIter = myLinkedList.GetEnumerator();
+
+            Console.WriteLine("연결리스트에 반복자 사용");
+            while (myLinkedListIter.MoveNext()) // 반복자의 다음이없으면 false 를 리턴한다.
+            {
+                Console.WriteLine(myLinkedListIter.Current);
+            }
+            myLinkedListIter.Dispose();
         }
     }
 }
