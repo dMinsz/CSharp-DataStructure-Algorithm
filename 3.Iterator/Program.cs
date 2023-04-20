@@ -135,7 +135,11 @@
             sorttest.Add(2);
             sorttest.Add(6);
             sorttest.Add(1);
-            DataStructure.MyFunc<int>.Sort(sorttest);
+
+            //DataStructure.MyFunc<int>.Sort(sorttest);
+
+            //람다식을 사용해봄
+            DataStructure.MyFunc<int>.Sort(sorttest,(x,y)=>x-y);
 
             foreach (var item in sorttest)
             {
