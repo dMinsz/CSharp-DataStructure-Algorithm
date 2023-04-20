@@ -24,7 +24,23 @@ namespace DataStructure
                     }
                 }
             }
+        }
 
+        //Comparison 매개변수를 추가하여 더 다양한 정렬을 구현가능하게함
+        public static void Sort(IList<T> list,Comparison<T> comparison)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                for (int j = 0; j < (list.Count - 1) - i; j++)
+                {
+                    if (comparison(list[j], list[j + 1]) > 0)
+                    {
+                        var temp = list[j];
+                        list[j] = list[j + 1];
+                        list[j + 1] = temp;
+                    }
+                }
+            }
         }
 
         //int 형 자료구조의 평균값을 구하는 함수
