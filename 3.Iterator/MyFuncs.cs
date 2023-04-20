@@ -14,7 +14,7 @@ namespace DataStructure
         {
             for (int i = 0; i < list.Count; i++)
             {
-                for (int j = 0; j < list.Count - 1; j++)
+                for (int j = 0; j < (list.Count - 1) - i; j++)
                 {
                     if (Comparer<T>.Default.Compare(list[j], list[j + 1]) > 0)
                     {
