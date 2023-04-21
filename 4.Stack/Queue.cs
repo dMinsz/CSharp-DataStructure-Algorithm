@@ -19,7 +19,7 @@ namespace DataStructure
         private LinkedList<T> container;
         /// 컨테이너로 List 를 사용하지 않고 LinkeList를 이용하는이유
         /// 가장 앞에 꺼를 삭제해야할때 복사가 일어나는데 너무 비효율적이다.
-        public AdapterQueue()
+        public AdapterQueue_LinkedList()
         {
             container = new LinkedList<T>();
         }

@@ -17,27 +17,38 @@ namespace DataStructure
 
         public AdapterStack()
         {
-            container = new List<T>();
+            container = new List<T>(); // 어댑터 패턴을 사용하기위해 초기화해준다.
         }
 
         public void Push(T item)
         {
-            container.Add(item);
+            container.Add(item); // push 를 List 의 add 로 구현
         }
 
         public T Pop()
         {
-            T value = container.Last<T>();
-            container.RemoveAt(container.Count);
-            return value;
+            T value = container.Last<T>(); // 마지막 값을 빼야되기때문에 저장해둠
+            container.RemoveAt(container.Count - 1);// 마지막값을 삭제
+            return value; // 저장해둔 마지막값 리턴
         }
 
         public T Peek()
         {
-            if (container.Count == 0)
+            if (container.Count == 0) // 아무런 값이 없을때
                 throw new InvalidOperationException();
+            
+            return container[container.Count - 1]; // 현재 마지막 위치가 count에 들어있기때문에 이렇게 리턴
+        }
+        
+        //현재 스택이 다차있는지 확인
+        public bool IsFull()
+        {
+            return container.Count == container.Capacity;
+        }
 
-            return container[container.Count];
+        public bool IsEmpty()
+        {
+            return container.Count == 0;
         }
 
     }
@@ -56,11 +67,12 @@ namespace DataStructure
         public Stack()
         {
             array = new T[DefaultCapacity];
-            topIndex = -1; // 처음엔 빈곳을 가르킨다.
+            topIndex = -1; // 처음엔 빈곳을 가리킨다.
         }
 
-        public int Count { get { return topIndex + 1; } }
+        public int Count { get { return topIndex + 1; } } //처음에 빈곳을 가리키기 때문에 +1 해준다.
 
+        //첫 초기화 값으로 바꾼다.
         public void Clear()
         {
             array = new T[DefaultCapacity];
@@ -70,10 +82,10 @@ namespace DataStructure
         //현재 위치의 값가져오기
         public T Peek()
         {
-            if (IsEmpty())
+            if (IsEmpty()) // 비웠으면 throw
                 throw new InvalidOperationException();
 
-            return array[topIndex];
+            return array[topIndex]; // 스택의 현재위치는 마지막위치와 동의어다
         }
 
         //Peek 시도 실패시 false 와 기본값 을 준다.
