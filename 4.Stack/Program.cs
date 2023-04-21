@@ -1,4 +1,6 @@
-﻿namespace _4.StackAndQueue
+﻿using System.Reflection;
+
+namespace _4.StackAndQueue
 {
     internal class Program
     {
@@ -68,6 +70,20 @@
             Examples.ParenthesisChecker checker = new Examples.ParenthesisChecker();
 
             checker.Test();
+
+            //스택계산기 테스트
+            Console.WriteLine("스택계산기 테스트");
+
+            string question = "(1+3)*4";
+
+            string resultPostFix = Examples.NotationChanger.Change(question);
+            Console.WriteLine("{0} 를 후위 연산 표기식으로 바꾸면", question);
+            Console.WriteLine(resultPostFix);
+
+            int result = Examples.StackCalculator.Calculate(question);
+
+            Console.WriteLine("실제계산한 답:{0}",result);
+
         }
     }
 }
