@@ -2,7 +2,7 @@
 
 ### **Queue 의 기본 구조**
 
-![RemoveList](./Images/Queue-01.png)
+![Queue01](./Images/Queue-01.PNG)
 
 **FIFO**(First in First OUT) 선입선출 LILO(후입후출) 방식의 자료구조
 
@@ -21,7 +21,7 @@
 
 배열을 이용하여 구현하려면 원형 구조의 배열을 사용해야한다.
 
-![RemoveList](./Images/Queue-02.png)
+![Queue02](./Images/Queue-02.PNG)
 
 왼쪽의 그림을 코드로 설명하자면 아래와 같다.
 #### 기본 데이터 세팅
@@ -121,7 +121,7 @@ private void Grow()
         }
 ```
 
-![RemoveList](./Images/Queue-03.png)
+![Queue03](./Images/Queue-03.PNG)
 
 #### 배열의 공간이 다 찼는지 확인하는 방법 / IsFull 함수 구현 1
 왼쪽 그림을 보면 배열에 값이 모두 차있을 때의 그림을 나타낸것이다.
@@ -170,7 +170,7 @@ public T Dequeue()
 
 #### 배열의 공간이 다 찼는지 확인하는 방법 / IsFull 함수 구현 2
 
-![RemoveList](./Images/Queue-04.png)
+![Queue04](./Images/Queue-04.PNG)
 
 오른쪽 그림이 앞서 본 공간이 모두 찼을때 의 두번째 상황이다.
 이걸 기준으로 코드를 완성해보자면
