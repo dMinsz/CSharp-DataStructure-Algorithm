@@ -63,6 +63,11 @@
             //C# stack test code
             TestStack();
             TestQueue();
+
+            //괄호검사기 테스트
+            Examples.ParenthesisChecker checker = new Examples.ParenthesisChecker();
+
+            checker.Test();
         }
     }
 }
