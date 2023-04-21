@@ -118,7 +118,7 @@ namespace DataStructure
                 throw new InvalidOperationException();
 
             T result = array[front];
-            MoveNext(ref front); // 삭제후에는 이동시켜줘야한다.
+            MoveNext(ref front); // 값을뺀후에는 이동시켜줘야한다.
             return result;
         }
 
@@ -206,7 +206,7 @@ namespace DataStructure
 
         private bool IsEmpty()
         {
-            return front == tail; // front - tail = 0 이면 queue가 비워진것
+            return front == tail; // queue가 비워진것
         }
 
         private void MoveNext(ref int index)
