@@ -64,8 +64,26 @@
 
         static void Main(string[] args)
         {
-            //우선순위큐 테스트
+            //C#의 우선순위큐 테스트
             PriorityQueue();
+
+            Console.WriteLine("내가 만든 우선순위큐 테스트");
+            
+            DataStructure.PriorityQueue<string, int> pq = new DataStructure.PriorityQueue<string,int>();
+            pq.Enqueue("Data1", 1);
+            pq.Enqueue("Data2", 3);
+            pq.Enqueue("Data3", 4);
+            pq.Enqueue("Data4", 2);
+
+            Console.WriteLine("우선순위큐 내용 모두 출력");
+
+            while (pq.Count > 0)// 우선순위가 높은 순서대로 데이터 출력
+            {
+                Console.WriteLine("데이터:{0} 우선순위:{1}",pq.TopElement,pq.TopPriority);
+                pq.Dequeue();
+            } 
+
+
 
 
         }

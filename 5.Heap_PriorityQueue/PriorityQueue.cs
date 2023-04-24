@@ -34,7 +34,7 @@ namespace DataStructure
      */
 
     #endregion
-    public class PriorityQueue<TElement,TPriority>
+    public class PriorityQueue<TElement, TPriority>
     {
         private struct Node // 각 요소를 노드로 만든다.
         {
@@ -45,6 +45,19 @@ namespace DataStructure
         private List<Node> nodes; // 리스트의 어댑터 패턴으로 사용하자.
         private IComparer<TPriority> comparer; // comparer 를 이용하면 더 다양한 자료구조를 받을수있다.
                                                // 단! 비교가능(IComparable) 일때
+
+        //testCode 를 위해 만듬
+        public TElement TopElement
+            {
+            get { return this.nodes[0].Element; }
+            }
+
+        public TPriority TopPriority
+        {
+            get { return this.nodes[0].Priority; }
+        }
+
+
 
         //기본생성자
         public PriorityQueue()
