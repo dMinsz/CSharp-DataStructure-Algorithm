@@ -11,9 +11,9 @@ namespace DataStructure
 
     //heap
     //=> 보무노드가 무조건 자식노드보다 우선순위가 높은상태를 힙상태라한다.
-    // 힙 자료구조는 2개의 자식을 가질수있는 이진 트리 자료구조로 만들 수 있다.
+    // 힙 자료구조는 2개의 자식을 가질 수 있는 완전 이진 트리 자료구조로 만들 수 있다.
     // heap을이용하여 우선순위큐 만들어보자.
-    // 2진 트리는 최소힙, 최대힙이있지만 최소힙으로 만들예정
+    // (2진 트리는 최소힙, 최대힙이있지만 최소힙으로 만들 예정)
 
     /*
      * 2진트리를 배열로 만들때 가지는 특성
@@ -27,7 +27,7 @@ namespace DataStructure
      * 오른쪽자식노드 => 부모인덱스 * 2 + 1
      * 부모노드의 인덱스는 => (자식인덱스-1)/ 2
      * 
-     * 주의: 완전 이진트리가 아니여서 비워진 자리가있을 수 있다.
+     * 주의: 비워진 자리가있을 수 있다. // 완전 이진 트리를 이용할것이기때문에 공간은 차지하고있다.
      * 
      * 트리를 노드기반으로 노드들이 자식노드를 가리켜도되지만
      * C# 은 노드기반 자료구조는 GC에 부담을 주기때문에 배열기반의 자료구조로 구현하는게 좋다.
@@ -46,6 +46,8 @@ namespace DataStructure
         private IComparer<TPriority> comparer; // comparer 를 이용하면 더 다양한 자료구조를 받을수있다.
                                                // 단! 비교가능(IComparable) 일때
 
+
+        #region For TestCode
         //testCode 를 위해 만듬
         public TElement TopElement
             {
@@ -56,8 +58,7 @@ namespace DataStructure
         {
             get { return this.nodes[0].Priority; }
         }
-
-
+        #endregion
 
         //기본생성자
         public PriorityQueue()
