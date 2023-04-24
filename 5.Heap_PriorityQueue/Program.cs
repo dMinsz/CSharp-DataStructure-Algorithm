@@ -81,10 +81,23 @@
             {
                 Console.WriteLine("데이터:{0} 우선순위:{1}",pq.TopElement,pq.TopPriority);
                 pq.Dequeue();
-            } 
+            }
 
+            //응급실 시스템 테스트
 
+            Console.WriteLine("\n**************응급실 시스템 테스트**************");
+            EmergencySystem emergencySystem = new EmergencySystem();
 
+            emergencySystem.AddPatient("강성민", 1);
+            emergencySystem.AddPatient("성민강", 3);
+            emergencySystem.AddPatient("우석", 5);
+            emergencySystem.AddPatient("개발자", 2);
+
+            while (emergencySystem.Count > 0)
+            {
+                emergencySystem.Healing();
+            }
+            Console.WriteLine("**************응급실 시스템 테스트**************\n");
 
         }
     }
