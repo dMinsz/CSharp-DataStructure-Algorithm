@@ -86,7 +86,7 @@
             //응급실 시스템 테스트
 
             Console.WriteLine("\n**************응급실 시스템 테스트**************");
-            EmergencySystem emergencySystem = new EmergencySystem();
+            HeapSystem.EmergencySystem emergencySystem = new HeapSystem.EmergencySystem();
 
             emergencySystem.AddPatient("강성민", 1);
             emergencySystem.AddPatient("성민강", 3);
@@ -99,6 +99,57 @@
             }
             Console.WriteLine("**************응급실 시스템 테스트**************\n");
 
+            //중간값구하기 테스트
+            Console.WriteLine("\n**************중간값 테스트**************");
+
+            int[] ints = new int[10];
+            
+
+            for (int i = 0; i < 10; i++)
+            {
+                Random random = new Random();
+                ints[i] = random.Next(0, 10000);
+            }
+
+            HeapSystem.MedianPeeker medPeeker = new HeapSystem.MedianPeeker(ints);
+
+            Console.WriteLine("내가찾은 중간값은 :{0}", medPeeker.Peek());
+            
+            Array.Sort(ints);
+
+            for (int i = 0; i < ints.Length; i++)
+            {
+                Console.Write(" {0} ", ints[i]);
+            }
+
+            Console.WriteLine("중간값은 :{0}", ints[ints.Length/2]);
+
+
+            // ADD 사용 해서 찾은 중간값
+            Console.WriteLine("\n**************ADD 사용 중간값 테스트**************");
+            HeapSystem.MedianPeeker medPeeker2 = new HeapSystem.MedianPeeker();
+            int size = 10;
+            int[] ints2 = new int[size];
+
+            for (int i = 0; i < size; i++)
+            {
+                Random random = new Random();
+                int temp = random.Next(0, 10000);
+                medPeeker2.Add(temp);
+                ints2[i] = temp; // 보여주기위함
+            }
+
+            Console.WriteLine("Add 사용 : 중간값은 :{0}", medPeeker2.Peek());
+            
+            Array.Sort(ints2);
+
+            for (int i = 0; i < ints2.Length; i++)
+            {
+                Console.Write(" {0} ", ints2[i]);
+            }
+
+            Console.WriteLine("Array 사용 : 중간값은 :{0}", ints2[ints2.Length / 2]);
+            Console.WriteLine("\n**************중간값 테스트**************");
         }
     }
 }
