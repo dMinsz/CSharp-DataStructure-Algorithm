@@ -37,14 +37,7 @@ namespace HeapSystem
 
     #region 많은 데이터 중 중간 값 구하기
 
-    /*  
-    중간 값 구하기 알고리즘
-    1. 최대 힙의 크기는 최소 힙의 크기와 같거나, 하나 더 크다.
-    2. 최대 힙의 최대 원소는 최소 합의 최소 원소보다 작거나 같다.
-    3. 이때 알고리즘에 맞지 않다면 최대 힙, 최소 힙의 가장 위의 값을 swap해준다.
-    */
-
-    /*
+    /* 중간값구하기 알고리즘
      1. 최대 힙과 최소 힙을 준비한다.
      2. 첫 번째 수를 중앙값으로 한다.
      3. 두 번째부터 입력받은 수를 중앙값과 비교해서 작으면 최대 힙, 크면 최소 힙에 push한다.
@@ -61,7 +54,7 @@ namespace HeapSystem
               = new PriorityQueue<int, int>(Comparer<int>.Create((a, b) => b - a));
 
         private int median;
-        private int count;
+        private int count; // 하나씩 데이터를 추가할때 홀수번째 체크를위한 변수
         public MedianPeeker()
         {
         }
@@ -83,10 +76,12 @@ namespace HeapSystem
                 if (datas[i] < median)
                 {
                     maxHeap.Enqueue(datas[i], datas[i]);
+                    count++;
                 }
                 else
                 {
                     minHeap.Enqueue(datas[i], datas[i]);
+                    count++;
                 }
 
 
@@ -96,24 +91,26 @@ namespace HeapSystem
                     if (maxHeap.Count < minHeap.Count)
                     {//4.2최대 힙과 최소 힙 중에 사이즈가 작은 힙에 중앙값을 push 하고
                         maxHeap.Enqueue(median, median);
+                        count++;
                     }
                     else 
                     {
                         minHeap.Enqueue(median, median);
+                        count++;
                     }
 
                     //4.3힙 중에 사이즈가 큰 힙의 top을 중앙값으로 한다.
                     if (maxHeap.Count > minHeap.Count)
                     {
                         median = maxHeap.Dequeue();
+                        count--;
                     }
                     else 
                     {
                         median = minHeap.Dequeue();
+                        count--;
                     }
-
                 }
-                count++;
             }
         }
 
@@ -132,10 +129,12 @@ namespace HeapSystem
                 if (item < median)
                 {
                     maxHeap.Enqueue(item, item);
+                    count++;
                 }
                 else
                 {
                     minHeap.Enqueue(item, item);
+                    count++;
                 }
 
                 if (count % 2 == 1)
@@ -144,25 +143,26 @@ namespace HeapSystem
                     if (maxHeap.Count < minHeap.Count)
                     {//4.2최대 힙과 최소 힙 중에 사이즈가 작은 힙에 중앙값을 push 하고
                         maxHeap.Enqueue(median, median);
+                        count++;
                     }
                     else
                     {
                         minHeap.Enqueue(median, median);
+                        count++;
                     }
 
                     //4.3힙 중에 사이즈가 큰 힙의 top을 중앙값으로 한다.
                     if (maxHeap.Count > minHeap.Count)
                     {
                         median = maxHeap.Dequeue();
+                        count--;
                     }
                     else
                     {
                         median = minHeap.Dequeue();
+                        count--;
                     }
-
-                    count++;
                 }
-
             }
         }
 
