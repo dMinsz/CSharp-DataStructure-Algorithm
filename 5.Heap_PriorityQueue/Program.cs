@@ -113,24 +113,27 @@
 
             HeapSystem.MedianPeeker medPeeker = new HeapSystem.MedianPeeker(ints);
 
-            Console.WriteLine("내가찾은 중간값은 :{0}", medPeeker.Peek());
-            
+            //비교를 위해 Array.Sort 사용
             Array.Sort(ints);
 
+            //정렬된 상태 출력
             for (int i = 0; i < ints.Length; i++)
             {
                 Console.Write(" {0} ", ints[i]);
             }
 
-            Console.WriteLine("중간값은 :{0}", ints[ints.Length/2]);
+            Console.WriteLine("\n 내가찾은 중간값은 :{0}", medPeeker.Peek());
+            Console.WriteLine("Array.Sort() 사용 / 중간값은 :{0}", ints[ints.Length/2]);
 
 
             // ADD 사용 해서 찾은 중간값
             Console.WriteLine("\n**************ADD 사용 중간값 테스트**************");
+
             HeapSystem.MedianPeeker medPeeker2 = new HeapSystem.MedianPeeker();
             int size = 10;
             int[] ints2 = new int[size];
 
+            //랜덤 값으로 Add 해준다.
             for (int i = 0; i < size; i++)
             {
                 Random random = new Random();
@@ -139,16 +142,17 @@
                 ints2[i] = temp; // 보여주기위함
             }
 
-            Console.WriteLine("Add 사용 : 중간값은 :{0}", medPeeker2.Peek());
-            
+            //비교를 위해 Array.Sort 사용
             Array.Sort(ints2);
 
+            //정렬된 상태 출력
             for (int i = 0; i < ints2.Length; i++)
             {
                 Console.Write(" {0} ", ints2[i]);
             }
 
-            Console.WriteLine("Array 사용 : 중간값은 :{0}", ints2[ints2.Length / 2]);
+            Console.WriteLine("\n 내가만든 Add 사용 / 중간값은 :{0}", medPeeker2.Peek());
+            Console.WriteLine("Array.Sort() 사용 / 중간값은 :{0}", ints2[ints2.Length / 2]);
             Console.WriteLine("\n**************중간값 테스트**************");
         }
     }
