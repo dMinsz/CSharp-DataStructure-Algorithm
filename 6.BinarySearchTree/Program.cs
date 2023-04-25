@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace _6.BinarySearchTree
 {
@@ -102,13 +103,53 @@ namespace _6.BinarySearchTree
             Console.WriteLine("트리 time : {0}", stopwatch.ElapsedTicks);//시간 잰거 출력
         }
 
+        //내가만든 이진탐색 트리 테스트 코드
+        static void TestMyBST() 
+        {
+            DataStructure.BinarySearchTree<int> bst = new DataStructure.BinarySearchTree<int>();
+
+            // 이진탐색 검색 효율 테스트
+            int[] array = new int[10000000];
+            Random random = new Random();
+            int rand;
+
+            //랜덤값으로 값을 배열과  DataStructure.BinarySearchTree에 넣어준다.
+            for (int i = 0; i < 1000000; i++)
+            {
+                rand = random.Next();
+                array[i] = rand;
+                bst.Add(rand);
+            }
+
+            array[9999999] = -1;
+            bst.Add(-1); // 마지막값으로 -1 넣어준다.
+
+            //시간 계산을 위한 클래스 선언
+            Stopwatch stopwatch = new Stopwatch();
+
+
+            stopwatch.Start();//시간재기
+            Array.Find(array, (x) => x == -1); // 마지막에 넣은 값 구하기
+            stopwatch.Stop();//시간재기 끝
+            Console.WriteLine("배열 time : {0}", stopwatch.ElapsedTicks);//시간 잰거 출력
+
+            stopwatch.Restart();//시간 다시재기
+            int value;
+            bst.TryGetValue(-1, out value); // 마지막에 넣은 값 구하기
+            stopwatch.Stop();//시간 재기 끝
+            Console.WriteLine("내가만든 트리 time : {0}", stopwatch.ElapsedTicks);//시간 잰거 출력
+
+        }
 
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, Binary Search Tree!\n");
 
             //C# 자료구조사용
-            BinarySearchTree();
+            //BinarySearchTree();
+
+            //내가만든 자료구조 사용 테스트
+            TestMyBST();
         }
     }
 }
