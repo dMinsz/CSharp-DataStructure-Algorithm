@@ -2,6 +2,7 @@
 {
     internal class Program
     {
+        #region Intro Description
         //배열 형식의 데이터 구조는 접근에는 용이하나 삽입&삭제시에는 효율이 떨어진다.
         ///  그래서 연결리스트에 대해 알아보자.
 
@@ -19,9 +20,9 @@
 
         // 삽입,삭제 작업시 배열 자료구조와 다르게 당겨주는 작업(복사) 을 하지않아도된다.
         // 단, 참조하는 연결 구조를 바꿔줘야함
+        #endregion
 
-
-        //기존의 LinkedList 사용법
+        //C#에서 구현되있는 LinkedList 사용법
         public static void LinkedList()
         {
             //정의
