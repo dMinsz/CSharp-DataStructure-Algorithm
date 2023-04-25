@@ -1,4 +1,13 @@
 # 기술 면접 대비 정보 정리
+## 목차
+
+*<종류 별 목차>*
+
+>[1. 배열과 선형 리스트](#배열과-선형-리스트)
+><br>[2. 선형 리스트](#선형-리스트)
+><br>[3. 연결 리스트](#linkedlist)
+><br>[4. 반복자(Iterator)](#반복자)
+><br>[5. 이진탐색트리(Binary Search Tree) ](#이진-탐색-트리)
 
 ## 배열과 선형 리스트
 
@@ -46,7 +55,8 @@ LinkedList<string> linkedlist = new LinkedList<string>();
 단, 데이터 검색 및 접근시 모든 노드들을 거쳐가면서 데이터를 탐색하기 때문에 Array, List
 보다 더 비효율 적인 단점이있다.
 
-## 선형 리스트 (C# => List, C/C++ => 동적배열)
+## 선형 리스트 
+*(C# => List, C/C++ => 동적배열)*
 
 ### 2. 선형 리스트에 삭제 연산의 구현 방식에 대해 말해보세요
 
@@ -95,7 +105,8 @@ LinkedList<string> linkedlist = new LinkedList<string>();
 |O(n)|O(n)|O(1)|O(1)|
 
 
-## 반복자 (Iterator , Enumerator)
+## 반복자 
+*(Iterator , Enumerator)*
 
 ### 4. 반복자 패턴 에 대해 설명해보세요.
 
@@ -122,6 +133,54 @@ LinkedList<string> linkedlist = new LinkedList<string>();
  C#에서는  IEnumerable 인터페이스를 통해 구현할 수 있으며 C# 에서 구현되어있는
  다양한 자료구조들은 이미 이 인터페이스를 상속하고 있어서 이터레이터를 통한 연산을
  할 수 있다.
+
+
+
+## 이진 탐색 트리 
+*(Binary Search Tree)*
+
+### 5. 이진 탐색 트리의 한계점과 해결 방법
+![BinarySearchTreeProblem](./Images/BST_Problem.PNG)
+
+위의 이미지 처럼 이진 탐색 트리는 노드들이 한쪽 자식으로만 추가되는 불균형 발생 가능하다.
+
+이러한 불균형이 생긴다면 
+접근,탐색,삽입,삭제 작업의 모든 시간복잡도가 O(n)이 될수 있어서 사용하는 데 이점이 사라진다.
+
+이러한 문제를 해결하기위해 자식 노드들의 균형을 맞추는 기능이있는 자가 균형 트리를 사용할 수있다. 
+대표적인 자료구조로는 Red-Black Tree, AVL Tree 등이 있다.
+
+
+### 6.이진탐색트리의 순회방법 및 순회 순서
+
+이진 탐색 트리의 순회 방식은 중위 순회 방식을 사용하며
+중위 순회시 정렬 을 보장한다.
+
+사용법 코드 예시
+
+```cs
+        public void Print() 
+        {
+            Print(root);
+        }
+        //중위순회하면서 print
+        public void Print(Node node) 
+        {
+            if (node.Left != null) Print(node.Left);
+            Console.WriteLine(" {0} ", node.Item);
+            if (node.Right != null) Print(node.Right);
+        }
+```
+
+설명:
+
+<중위 순회방식>
+
+1. 왼쪽 자식 노드가 있으면 왼쪽 자식 노드 부터 출력 (그 자식노드의 자식이 있으면 반복해서 마지막 자식노드 부터 출력)
+
+2. 그리고 본인(여기서는 node)을 출력
+
+3. 오른쪽 자식 노드가 있으면 오른 쪽 자식 노드 부터 출력 (그 자식노드의 자식이있으면 역시나 반복해서 마지막 노드 까지 출력)
 
 
 
