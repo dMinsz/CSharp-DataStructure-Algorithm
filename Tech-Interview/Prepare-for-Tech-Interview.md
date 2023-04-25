@@ -140,7 +140,7 @@ LinkedList<string> linkedlist = new LinkedList<string>();
 *(Binary Search Tree)*
 
 ### 5. 이진 탐색 트리의 한계점과 해결 방법
-![BinarySearchTreeProblem](./Images/BST_Problem.PNG)
+![BinarySearchTreeProblem](./Images/BST_Problem.png)
 
 위의 이미지 처럼 이진 탐색 트리는 노드들이 한쪽 자식으로만 추가되는 불균형 발생 가능하다.
 
