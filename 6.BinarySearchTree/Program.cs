@@ -64,7 +64,7 @@ namespace _6.BinarySearchTree
             sortedDictionary.Add(4, "d");
             sortedDictionary.Add(5, "e");
 
-            string searchValue2;
+            string? searchValue2;
             sortedDictionary.TryGetValue(3, out searchValue2);      // 탐색 시도
             string indexerValue2 = sortedDictionary[3];             // 인덱서를 통한 탐색
 

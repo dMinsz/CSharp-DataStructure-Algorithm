@@ -120,20 +120,23 @@ namespace DataStructure
                     Node parent = node.Parent;
                     Node? child = node.HasLeftChild ? node.Left : node.Right;
 
-                    if (child.IsLeftChild)
-                    { // node의 자식이 왼쪽노드일때 왼쪽노드 를 node의 부모와 연결해준다.
-                        parent.Left = child;
-                        child.Parent = parent;
-                    }
-                    else if (node.IsRightChild)
-                    {// node의 자식이 오른쪽노드일때 오른쪽노드 를 node의 부모와 연결해준다.
-                        parent.Right = child;
-                        child.Parent = parent;
-                    }
-                    else
-                    { // 왼쪽자식도 아니고 오른쪽 자식도아니면 본인이 루트이다.
-                        root = child;
-                        child.Parent = null;
+                    if (child != null)
+                    {// error check
+                        if (node.IsLeftChild)
+                        { // node의 자식이 왼쪽노드일때 왼쪽노드 를 node의 부모와 연결해준다.
+                            parent.Left = child;
+                            child.Parent = parent;
+                        }
+                        else if (node.IsRightChild)
+                        {// node의 자식이 오른쪽노드일때 오른쪽노드 를 node의 부모와 연결해준다.
+                            parent.Right = child;
+                            child.Parent = parent;
+                        }
+                        else
+                        { // 왼쪽자식도 아니고 오른쪽 자식도아니면 본인이 루트이다.
+                            root = child;
+                            child.Parent = null;
+                        }
                     }
                 }
                
@@ -143,17 +146,19 @@ namespace DataStructure
                 // 오른쪽 노드의 왼쪽 자식 노드에 깊이를 내려가면서 가장 아래에있는 노드를 
                 // 현재 노드와 교체하고 가장 아래있는 노드는 삭제하면된다.
                 //참고: 자식노드중 더 작은 값인 왼쪽 노드 기준으로 가장 큰 값을 구해서 교체하는 것도가능하다.
-
-                Node nextNode = node.Right;
-                while (nextNode.Left != null)
-                { //오른쪽자식의 다음 자식의 왼쪽 으로 깊이탐색
-                    nextNode = nextNode.Left;
+                if (node.Right != null)
+                {//warning check
+                    Node nextNode = node.Right;
+                    while (nextNode.Left != null)
+                    { //오른쪽자식의 다음 자식의 왼쪽 으로 깊이탐색
+                        nextNode = nextNode.Left;
+                    }
+                    //왼쪽 자식이 없을때 까지 깊이를 내려간상황
+                    node.Item = nextNode.Item; 
+                    // (node 의 자식 노드중) 오른쪽 노드를 기준으로 가장 아래있는 왼쪽 자식 값은
+                    // (node 의 왼쪽 자식노드) 보다 크기 때문에 위치를 교체해주고 삭제하면된다.
+                    EraseNode(nextNode); // 자식노드가 없는 상태가 될것이다.
                 }
-                //왼쪽 자식이 없을때 까지 깊이를 내려간상황
-                node.Item = nextNode.Item; 
-                // (node 의 자식 노드중) 오른쪽 노드를 기준으로 가장 아래있는 왼쪽 자식 값은
-                // (node 의 왼쪽 자식노드) 보다 크기 때문에 위치를 교체해주고 삭제하면된다.
-                EraseNode(nextNode); // 자식노드가 없는 상태가 될것이다.
             }
             
         }
@@ -189,7 +194,7 @@ namespace DataStructure
                 return false;
             }
 
-            Node findNode = FindNode(item);
+            Node? findNode = FindNode(item);
             if (findNode == null) // 찾을 값의 노드가 없을때
             {
                 outValue = default(T);
