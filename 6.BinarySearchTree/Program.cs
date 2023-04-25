@@ -139,6 +139,19 @@ namespace _6.BinarySearchTree
             stopwatch.Stop();//시간 재기 끝
             Console.WriteLine("내가만든 트리 time : {0}", stopwatch.ElapsedTicks);//시간 잰거 출력
 
+            //중위순회 테스트
+            Console.WriteLine("중위순회로 트리 정렬해보기!");
+            DataStructure.BinarySearchTree<int> bst2 = new DataStructure.BinarySearchTree<int>();
+
+            bst2.Add(3);
+            bst2.Add(1);
+            bst2.Add(10);
+            bst2.Add(7);
+            bst2.Add(8);
+            bst2.Add(5);
+
+            bst2.Print();
+
         }
 
         static void Main(string[] args)
@@ -151,5 +164,22 @@ namespace _6.BinarySearchTree
             //내가만든 자료구조 사용 테스트
             TestMyBST();
         }
+
+        #region 트리구조의 순회설명
+        /*
+         * 트리 구조의 순회 순서
+         * 
+         * 전위순회 => 노드 왼쪽 오른쪽
+         * 중위순회 => 왼쪽 노드 오른쪽  <- 이진탐색트리의 순회 / 결과는 오름차순정렬
+         * 후위순회 => 왼쪽 오른쪽 노드
+         * 
+         * 
+         * 이진탐색트리는 중위순회를 할때 정확히 오름차순으로 되어있다.
+         * 
+         * 
+         */
+
+
+        #endregion
     }
 }

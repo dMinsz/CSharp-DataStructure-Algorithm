@@ -212,8 +212,21 @@ namespace DataStructure
         {
             root = null;
         }
+
+        public void Print() 
+        {
+            Print(root);
+        }
+        //중위순회하면서 print
+        public void Print(Node node) 
+        {
+            if (node.Left != null) Print(node.Left);
+            Console.WriteLine(" {0} ", node.Item);
+            if (node.Right != null) Print(node.Right);
+        }
+
         #region Node 클래스
-        private class Node
+        public class Node
         {
             private T item;
             private Node? parent; // 부모값
