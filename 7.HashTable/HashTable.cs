@@ -69,7 +69,7 @@ namespace DataStructure
         }
 
         //데이터 추가
-        public partial void Add(TKey key, TValue value)
+        public void Add(TKey key, TValue value)
         {
             TryInsert(key, value, InsertionBehavior.ThrowOnExisting);
         }
