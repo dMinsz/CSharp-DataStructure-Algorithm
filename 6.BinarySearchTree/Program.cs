@@ -162,7 +162,22 @@ namespace _6.BinarySearchTree
             //BinarySearchTree();
 
             //내가만든 자료구조 사용 테스트
-            TestMyBST();
+            //TestMyBST();
+
+
+            //
+            DataStructure.RedBlackTree<int> rdt = new DataStructure.RedBlackTree<int>();
+
+            rdt.Add(3);
+            rdt.Add(1);
+            rdt.Add(10);
+            rdt.Add(7);
+            rdt.Add(8);
+            rdt.Add(5);
+            rdt.Add(-1);
+
+            Console.WriteLine(rdt.PrintTree());
+            Console.WriteLine("rdt 찾은거 {0}",rdt.Find(-1).value);
         }
 
         #region 트리구조의 순회설명

@@ -10,319 +10,302 @@ namespace DataStructure
     //자가 균형 기능을 가진 Red Black Tree 구현
     internal class RedBlackTree<T> where T : IComparable<T>
     {
-        #region Node
-        //트리가 가질 노드 세팅
-        public enum NodeType { Red, Black, None }
+        public enum Color
+        {
+            Red,
+            Black
+        }
+
         public class Node
         {
-            private T item;
-            private NodeType type;
-            private Node? parent; // 부모값
-            private Node? left; // 왼쪽 자식
-            private Node? right; // 오른쪽 자식
-
-            public Node() 
+            public Node()
             {
-                this.item = default(T);
-                this.parent = null;
-                this.left = null;
-                this.right = null;
-                type = NodeType.Red;
+                value = default(T);
+                count = 0;
+            }
+            public Node(T val)
+            {
+                value = val;
+                count = 0;
             }
 
-            public Node(T item, Node? parent, Node? left, Node? right)
+            public Node(T val, Node parent)
             {
-                this.item = item;
                 this.parent = parent;
-                this.left = left;
-                this.right = right;
-                type = NodeType.Red;
+                value = val;
             }
 
-            public T Item { get { return item; } set { item = value; } }
-            public Node? Parent { get { return parent; } set { parent = value; } }
-            public Node? Left { get { return left; } set { left = value; } }
-            public Node? Right { get { return right; } set { right = value; } }
-            public bool HasLeftChild { get { return left != null; } }
-            public bool HasRightChild { get { return right != null; } }
-            public bool IsRootNode { get { return parent == null; } }
-            public bool IsLeftChild { get { return parent != null && parent.left == this; } }
-            public bool IsRightChild { get { return parent != null && parent.right == this; } }
 
-            public NodeType GetType()
-            {
-                return type;
-            }
-            public void ChangeType()
-            {
-                if (this.type == NodeType.Red)
-                {
-                    this.type = NodeType.Black;
-                }
-                else
-                {
-                    this.type = NodeType.Red;
-                }
-            }
-
-            public void ChangeType(NodeType type) { this.type = type; }
+            public T value;// 값
+            public Color color = Color.Red; // 기본값은 빨강
+            public Node parent; // 부모노드
+            public Node left; // 왼쪽 자식노드
+            public Node right; // 오른쪽 자식노드
+            public int count;//이 값을 가진 요소의 수
         }
-        #endregion
 
-        private Node? root;
-        private Node? leafNode;
-        public int size { get { return size; } set { } }
 
+        private int iterations;//트리의 순회, 탐색을 위해 사용
+        public Node root;
         public RedBlackTree()
         {
-            leafNode = new Node();
-            leafNode.ChangeType(NodeType.Black);
-            root = leafNode; 
-            size = 0; 
+            root = null;
+        }
+        public RedBlackTree(T value)
+        {
+            root = new Node(value);
+            root.color = Color.Black; // 루트는 검정
         }
 
-        public bool IsEmpty() { return size == 0; }
-
-        //왼쪽으로 회전
-        public void RotateLeft(Node node) 
+        public int GetIerations()
         {
-            Node? rightChild = node.Right;
+            var res = iterations;
+            iterations = 0;
+            return res;
+        }
 
-            if (rightChild == null)
+        public Node Find(T value)
+        {
+            var current = root;
+            while (current != null && !EqualityComparer<T>.Default.Equals(current.value,value))
             {
-                throw new InvalidOperationException();
+                iterations++;
+                if (Comparer<T>.Default.Compare(current.value, value) < 0)
+                    current = current.right;
+                else
+                    current = current.left;
+            }
+            return current;
+        }
+
+        public List<Node> ToList()
+        {
+            var result = new List<Node>();
+            AddNode(root);
+
+            void AddNode(Node n)
+            {
+                if (n.left != null)
+                    AddNode(n.left);
+
+                result.Add(n);
+
+                if (n.right != null)
+                    AddNode(n.right);
+            }
+            return result;
+        }
+
+        public string PrintTree()
+        {
+            var resultString = "";
+            PrintNode(root);
+
+            void PrintNode(Node n)
+            {
+                if (n.left != null)
+                    PrintNode(n.left);
+
+                resultString += " "+ n.value;
+
+                if (n.right != null)
+                    PrintNode(n.right);
+            }
+            return resultString;
+        }
+
+        protected Node AddNode(Node node, T data)
+        {
+            iterations++;
+            if (EqualityComparer<T>.Default.Equals(data,node.value))
+            {
+                node.count++;
+                return node;
             }
 
-            node.Right = rightChild.Left;
-
-            if (rightChild.Left == null)
+            if (Comparer<T>.Default.Compare(data, node.value) < 0) 
             {
-               rightChild.Left.Parent = node;
-            }
-            rightChild.Parent = node.Parent;
-
-            if (node.IsRootNode)
-            {
-                this.root = rightChild;
-            }
-            else if (node.IsLeftChild)
-            {
-                node.Parent.Left = rightChild;
+                if (node.left != null)
+                    return AddNode(node.left, data);
+                return node.left = new Node(data, node);
             }
             else 
             {
-                node.Parent.Right = rightChild;
+                if (node.right != null)
+                    return AddNode(node.right, data);
+                return node.right = new Node(data, node);
             }
-
-            node.Parent = rightChild;
-            rightChild.Left = node;
         }
 
-        //오른쪽으로 회전
-        public void RotateRight(Node node)
+        public Node Add(T data)
         {
-            Node? leftChild = node.Left;
 
-            if (leftChild == null)
+            if (root == null)
             {
-                throw new InvalidOperationException();
+                root = new Node(data);
+                root.color = Color.Black;
+                return root;
             }
+            var n = AddNode(root, data);
 
-            node.Left = leftChild.Right;
+            Insert(n);
+            root.color = Color.Black;
+            return n;
+        }
 
-            if (leftChild.Right == null)
+        private void Insert(Node InputNode)
+        {
+            Node newNode = new Node();
+            InputNode.color = Color.Red;
+            while (InputNode != root && InputNode.parent.color == Color.Red)
             {
-                leftChild.Right.Parent = node;
+                if (InputNode.parent == InputNode.parent.parent.left)
+                {
+                    newNode = InputNode.parent.parent.right == null 
+                        ? new Node(default(T), InputNode.parent.parent.right) { color = Color.Black } 
+                        : InputNode.parent.parent.right;
+
+                    if (newNode.color == Color.Red)
+                    {
+                        InputNode.parent.color = Color.Black;
+                        newNode.color = Color.Black;
+                        InputNode.parent.parent.color = Color.Red;
+                        InputNode = InputNode.parent.parent;
+                    }
+                    else
+                    {
+                        if (InputNode == InputNode.parent.right)
+                        {
+                            InputNode = InputNode.parent;
+                            rotate_left(InputNode);
+                        }
+
+                        InputNode.parent.color = Color.Black;
+                        InputNode.parent.parent.color = Color.Red;
+                        rotate_right(InputNode.parent.parent);
+                    }
+
+                }
+                else
+                {
+                    newNode = InputNode.parent.parent.left == null 
+                        ? new Node(default(T), InputNode.parent.parent.left) { color = Color.Black } 
+                        : InputNode.parent.parent.left;
+                    if (newNode.color == Color.Red)
+                    {
+                        InputNode.parent.color = Color.Black;
+                        newNode.color = Color.Black;
+                        InputNode.parent.parent.color = Color.Red;
+                        InputNode = InputNode.parent.parent;
+                    }
+                    else
+                    {
+                        if (InputNode == InputNode.parent.left)
+                        {
+                            InputNode = InputNode.parent;
+                            rotate_right(InputNode);
+                        }
+
+                        InputNode.parent.color = Color.Black;
+                        InputNode.parent.parent.color = Color.Red;
+                        rotate_left(InputNode.parent.parent);
+                    }
+
+                }
             }
-            leftChild.Parent = node.Parent;
+        }
 
-            if (node.IsRootNode)
+        //오른쪽 회전
+        protected void rotate_right(Node n)
+        {
+
+            var newNode = new Node();
+            if (n.left != null)
             {
-                this.root = leftChild;
-            }
-            else if (node.IsLeftChild)
-            {
-                node.Parent.Left = leftChild;
+                newNode = n.left;
+                n.left = newNode.right;
+
+
+
+                if (newNode.right != null)
+                    newNode.right.parent = n;
+                newNode.parent = n.parent;
+                if (n.parent == null)
+                    root = newNode;
+                else if (n == n.parent.right)
+                    n.parent.right = newNode;
+                else
+                    n.parent.left = newNode;
+                newNode.right = n;
+                n.parent = newNode;
             }
             else
             {
-                node.Parent.Right = leftChild;
-            }
-
-            node.Parent = leftChild;
-            leftChild.Left = node;
-        }
-
-        public void AddFixUp(Node node) 
-        {
-            while (node != root && node.Parent.GetType() != NodeType.Red)
-            {
-                var parent = node.Parent;
-                var grandParent = node.Parent.Parent;
-
-                //부모가 왼쪽 자식일경우
-                if (parent.IsLeftChild)
-                {
-                    Node? uncle = grandParent.Right;
-                    // 삼촌이 빨간색일 경우
-                    // 조부모를 빨간색으로 삼촌을 검은색으로 변경 후, 조부모를 기준으로 반복
-                    if (null != uncle && uncle.GetType() == NodeType.Red)
-                    {
-                        grandParent.ChangeType(NodeType.Red);
-                        parent.ChangeType(NodeType.Black);
-                        uncle.ChangeType(NodeType.Black);
-
-                        node = grandParent;
-                    }
-                    else
-                    {// 삼촌이 검은색이며 현재 노드가 오른쪽 자식인 경우
-                     // 부모를 기준으로 왼쪽회전 후, 새로 삽입한 노드를 기준으로 진행
-                        if (node.IsRightChild)
-                        {
-                            node = node.Parent;
-                            RotateLeft(node);
-                        }
-                        // 삼촌이 검은색이며 현재 노드가 왼쪽 자식일 때
-                        // 부모를 검은색으로 조부모를 빨간색으로 변경 후, 조부모를 기준으로 오른쪽으로 회전 후 반복
-                        parent.ChangeType(NodeType.Black);
-                        grandParent.ChangeType(NodeType.Red);
-                        RotateRight(node);
-                    }
-                }
-                else//부모가 오른쪽 자식인 경우
-                {
-                    // 삼촌이 검은색이며 현재 노드가 왼쪽 자식일 때
-                    // 부모를 기준으로 오른쪽회전 후, 새로 삽입한 노드를 기준으로 반복
-                    if (node.IsLeftChild)
-                    {
-                        node = node.Parent;
-                        RotateRight(node);
-                    }
-
-                    // 삼촌이 검은색이며 현재 노드가 오른쪽 자식일 때
-                    // 부모를 검은색으로 조부모를 빨간색으로 변경 후, 조부모를 기준으로 왼쪽으로 회전 후 반복
-                    parent.ChangeType(NodeType.Black);
-                    grandParent.ChangeType(NodeType.Red);
-                    RotateLeft(grandParent);
-                }
-            }
-            root.ChangeType(NodeType.Black);
-        }
-
-        public bool Add(T item) 
-        {
-            Node newNode = new Node(item,null,null,null);
-
-            //1. 데이터가 비워져있을때
-            if (this.IsEmpty()) 
-            {
-                this.root = newNode;
-                size++;
-                return true;
-            }
-
-            Node Current = this.root;
-
-            while (true)
-            {
-                // 2-1. 추가 하는 데이터가 더 큰 경우
-                if (Comparer<T>.Default.Compare(item, Current.Item) > 0)
-                {
-                    if (Current.HasRightChild)
-                    {// 3-1. 오른쪽에 노드가 있는 경우, 오른쪽으로 가기.
-                        Current = Current.Right;
-                    }
-                    else // 3-2. 오른쪽에 노드가 없는 경우, 그 위치에 추가
-                    {
-                        Current.Right = newNode;
-                        newNode.Parent = Current;
-                        break;
-                    }
-
-                }
-                else if (Comparer<T>.Default.Compare(item, Current.Item) < 0)
-                {// 2-2. 추가 하는 데이터가 더 작은 경우
-                    if (Current.HasLeftChild)
-                    {// 3-1. 왼쪽에 노드가 있는 경우, 왼쪽으로 가기.
-                        Current = Current.Left;
-                    }
-                    else // 3-2. 왼쪽에 노드가 없는 경우, 그 위치에 추가.
-                    {
-                        Current.Left = newNode;
-                        newNode.Parent = Current;
-                        break;
-                    }
-                }
-                else // 2-3. 추가 하는 데이터가 같은 경우, 무시
-                {
-                    return false;
-                }
-
-            }
-
-            AddFixUp(newNode);
-            size++;
-            return true;
-
-        }
-
-        public Node Find(T item)
-        {
-            return new Node(item, null, null, null);
-        }
-        public void Erase(Node node)
-        {
-            if (this.IsEmpty())
-            {
-               throw new InvalidOperationException();
-            }
-
-            Node current = node;
-            Node nextNode = leafNode;
-            Node removeNode = leafNode;
-            Node doubleBlackNode = leafNode;
-
-
-            if (current.Left == leafNode || current.Right == leafNode)
-            {
-                removeNode = current;
-                //nextNode = 
+                newNode = n.parent;
+                newNode.parent.right = n;
+                n.parent = n;
+                n.parent.right = newNode;
+                n.parent = newNode.parent;
+                newNode.parent = n;
+                newNode.left = null;
             }
 
         }
 
-        public void Next(Node node) 
+        protected void rotate_left(Node n)
         {
-            //예외처리, 하나도 없었을 때
-            if (this.leafNode == this.root || null == this.root)
+            var newNode = new Node();
+            if (n.right != null)
             {
-                throw new InvalidOperationException();
+                newNode = n.right;
+                n.right = newNode.left;
+
+                if (newNode.left != null)
+                    newNode.left.parent = n;
+                newNode.parent = n.parent;
+                if (n.parent == null)
+                    root = newNode;
+                else if (n == n.parent.left)
+                    n.parent.left = newNode;
+                else
+                    n.parent.right = newNode;
+                newNode.left = n;
+                n.parent = newNode;
             }
+            else
+            {
+                newNode = n.parent;
 
-            Node current = this.root;
-            Node leafNode = this.leafNode;
-
-            if (leafNode != current.Right)
-            {//오른쪽 자식이 있는 경우, 오른쪽 자식으로 가서 왼쪽 자식이 없을 때까지 내려감
-             // 오른쪽 자식의 가장 작은 값이 당연히 다음 노드이다.
-
-
+                newNode.parent.left = n;
+                n.parent = n;
+                n.parent.left = newNode;
+                n.parent = newNode.parent;
+                newNode.parent = n;
+                newNode.right = null;
             }
         }
-        public bool Remove(T item)
+
+
+        protected Node grandparent(Node n)
         {
-            if (this.IsEmpty())
-            {
-                return false;
-            }
+            if ((n != null) && (n.parent != null))
+                return n.parent.parent;
+            else
+                return null;
+        }
 
-            Node findNode = Find(item);
+        //найти дядю
 
-            if (false) // 노드가 끝에있으면
-            {
-                Erase(findNode);
-            }
-            return true;
+        protected Node uncle(Node n)
+        {
+            Node g = grandparent(n);
+            if (g == null)
+                return null;
+            if (n.parent == g.left)
+                return g.right;
+            else
+                return g.left;
+
         }
 
     }
