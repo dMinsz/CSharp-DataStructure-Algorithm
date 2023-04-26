@@ -126,8 +126,7 @@ namespace DataStructure
             int hashCode = hashFunc(key); // 해시코드를 얻는다.
             int index = Math.Abs(hashCode) % table.Length;//나눗셈으로 해싱된 인덱스를만든다.
 
-            while (table[index].state == Entry.State.Using //충돌시 반복 해서 충돌 회피
-                || table[index].state == Entry.State.Deleted) // 삭제된 상태일때도 값을 추가해줘야한다.
+            while (table[index].state == Entry.State.Using) //충돌시 반복 해서 충돌 회피
             {
                 if (key.Equals(table[index].key)) //key 값이 해싱된 곳의 키값과 같다면
                 {
@@ -138,10 +137,6 @@ namespace DataStructure
                             table[index].key = key;
                             table[index].value = value;
 
-                            if (table[index].state == Entry.State.Deleted)
-                            {   //삭제된 곳에 값을 추가하면 상태를 변경해준다.
-                                table[index].state = Entry.State.Using;
-                            }
                             return true;
                         case InsertionBehavior.ThrowOnExisting: // 동일한 키값을 허용하지않는다.
                             throw new ArgumentException();
