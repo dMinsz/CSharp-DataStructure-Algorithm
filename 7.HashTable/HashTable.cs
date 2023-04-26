@@ -25,7 +25,7 @@ namespace DataStructure
         private struct Entry
         { // 키와 밸류값을 같이 갖고있는게 유용하다.
             public enum State { None, Using, Deleted }//현재 공간을 사용하지않음,사용중,지웠음
-                                                     //Deleted 는 삭제시 빈공간으로 인식하지않게 하기위해 만듬
+                                                      //Deleted 는 삭제시 빈공간으로 인식하지않게 하기위해 만듬
             public int hashCode;
             public State state;
             public TKey key;
@@ -43,7 +43,7 @@ namespace DataStructure
             table = new Entry[DefaultCapacity];
             hashFunc = HashFunc;
         }
-        
+
         public HashTable(Func<TKey, int> hashFunc)
         {//함수를 전달 받을때
             this.table = new Entry[DefaultCapacity];
@@ -81,7 +81,7 @@ namespace DataStructure
         }
 
         //데이터 삭제
-        public bool Remove(TKey key) 
+        public bool Remove(TKey key)
         {
             int index = FindIndex(key);
 
@@ -89,7 +89,7 @@ namespace DataStructure
             {
                 return false;
             }
-            else 
+            else
             {
                 table[index].state = Entry.State.Deleted;
                 return true;
@@ -125,7 +125,7 @@ namespace DataStructure
 
             int hashCode = hashFunc(key); // 해시코드를 얻는다.
             int index = Math.Abs(hashCode) % table.Length;//나눗셈으로 해싱된 인덱스를만든다.
-          
+
             while (table[index].state == Entry.State.Using //충돌시 반복 해서 충돌 회피
                 || table[index].state == Entry.State.Deleted) // 삭제된 상태일때도 값을 추가해줘야한다.
             {
@@ -144,7 +144,7 @@ namespace DataStructure
                             }
                             return true;
                         case InsertionBehavior.ThrowOnExisting: // 동일한 키값을 허용하지않는다.
-                                throw new ArgumentException();
+                            throw new ArgumentException();
                         case InsertionBehavior.None:
                         default:
                             return false;
@@ -164,7 +164,8 @@ namespace DataStructure
         {
             int hashCode = hashFunc(key);
             int index = Math.Abs(hashCode) % table.Length;//해싱
-            while (table[index].state == Entry.State.Using) // 충돌이면
+            while (table[index].state == Entry.State.Using// 충돌이면
+                    ||table[index].state == Entry.State.Deleted) //삭제됬을때
             {
                 if (key.Equals(table[index].key))
                 {                // 주어진 key가 테이블내에 있으면
