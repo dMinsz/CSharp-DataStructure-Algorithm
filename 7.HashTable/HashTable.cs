@@ -164,8 +164,8 @@ namespace DataStructure
         {
             int hashCode = hashFunc(key);
             int index = Math.Abs(hashCode) % table.Length;//해싱
-            while (table[index].state == Entry.State.Using// 충돌이면
-                    ||table[index].state == Entry.State.Deleted) //삭제됬을때
+            while (table[index].state == Entry.State.Using// 충돌상태거나 삭제된 상태일때
+                    ||table[index].state == Entry.State.Deleted) // 삭제된 상태일때 는 재해싱만 해주면된다.
             {
                 if (key.Equals(table[index].key))
                 {                // 주어진 key가 테이블내에 있으면
