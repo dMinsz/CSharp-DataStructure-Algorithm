@@ -286,9 +286,28 @@ namespace DataStructure
             if (current.Left == leafNode || current.Right == leafNode)
             {
                 removeNode = current;
-                //nextNode = nextNode.
+                //nextNode = 
             }
 
+        }
+
+        public void Next(Node node) 
+        {
+            //예외처리, 하나도 없었을 때
+            if (this.leafNode == this.root || null == this.root)
+            {
+                throw new InvalidOperationException();
+            }
+
+            Node current = this.root;
+            Node leafNode = this.leafNode;
+
+            if (leafNode != current.Right)
+            {//오른쪽 자식이 있는 경우, 오른쪽 자식으로 가서 왼쪽 자식이 없을 때까지 내려감
+             // 오른쪽 자식의 가장 작은 값이 당연히 다음 노드이다.
+
+
+            }
         }
         public bool Remove(T item)
         {
