@@ -2,7 +2,7 @@
 
 namespace BackJoon_15651
 {
-    //https://www.acmicpc.net/problem/15651
+    //문제 : https://www.acmicpc.net/problem/15651
     internal class Program
     {
         public static int N, M;

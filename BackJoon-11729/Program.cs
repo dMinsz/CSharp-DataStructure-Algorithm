@@ -1,7 +1,7 @@
 ﻿using System.Text;
 
 namespace BackJoonTest_11729
-{   //https://www.acmicpc.net/problem/11729
+{   //문제 : https://www.acmicpc.net/problem/11729
     internal class Program
     {
         public static StringBuilder sbResult = new StringBuilder();
