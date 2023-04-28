@@ -34,30 +34,30 @@ namespace Sorts
         {
             for (int i = 0; i < list.Count; i++)
             {
-                int minIndex = i;
+                int minIndex = i; // 가장 작은 값의 인덱스
                 for (int j = i + 1; j < list.Count; j++)
-                {
-                    if (list[j] < list[minIndex])
+                {  // j = i+1 인 이유는 이미 0번째 인덱스 값을 가장작은값으로 세팅해두어서
+                    if (list[j] < list[minIndex]) // 현재 가장 작은 값보다 작은 값을 순회하면서 찾는다.
                     {
-                        minIndex = j;
+                        minIndex = j; // 현재 가장 작은값을 바꿔준다.
                     }
                 }
-                Swap(list, i, minIndex);
+                Swap(list, i, minIndex); // 전체 배열을 순회해서 가장 작은 값을 찾았으니 맨앞에 넣어준다.
             }
         }
         // <삽입정렬>
         // 데이터를 하나씩 꺼내어 정렬된 자료 중 적합한 위치에 삽입하여 정렬
         public static void InsertionSort(IList<int> list)
         {
-            for (int i = 1; i < list.Count; i++)
+            for (int i = 1; i < list.Count; i++) // 배열의 두번째 자리부터 시작
             {
-                int select = list[i];
-                int j;
-                for (j = i-1; j >=0 && select < list[j]; j--)
-                {
-                    list[j + 1] = list[j];
+                int select = list[i]; // 현재 선택된 데이터
+                int j; 
+                for (j = i-1; j >=0 && select < list[j]; j--) // 선택된 데이터의 앞의 자료들 모두 비교하여
+                {                                           // 선택된 데이터의 위치를 찾아낸다.
+                    list[j + 1] = list[j];// 위치를 찾았으면 원래값을 한칸 뒤로 미룬 위치로 이동
                 }
-                list[j + 1] = select;
+                list[j + 1] = select; // 선택된 위치에 데이터 삽입
             }
         }
 
@@ -115,15 +115,15 @@ namespace Sorts
         //병합정렬
         // 데이터를 2분할하여 정렬 후 합병
         // 참고: 메모리 공간을 많이먹어서 메모리가 부족하다면 불리하다.
-        // 안정성이 이 좋다 (4 5(1) 5(2) 9 일때 같은숫자인 5 의 위치가 안깨진다.)
+        // 안정성이 좋다 (4 5(1) 5(2) 9 일때 같은숫자인 5 의 위치가 안깨진다.)
         public static void MergeSort(IList<int> list, int left, int right)
         {
             if (left == right) return;
 
-            int mid = (left + right) / 2;
-            MergeSort(list, left, mid);
-            MergeSort(list, mid + 1, right);
-            Merge(list, left, mid, right);
+            int mid = (left + right) / 2;   // 반으로 분할할 위치 계산
+            MergeSort(list, left, mid);     // 분할된 왼쪽 부분 정렬
+            MergeSort(list, mid + 1, right);// 분할된 오른쪽 부분 정렬
+            Merge(list, left, mid, right);  // 정렬된 2개의 부분 배열 병합
         }
 
         public static void Merge(IList<int> list, int left, int mid, int right)
