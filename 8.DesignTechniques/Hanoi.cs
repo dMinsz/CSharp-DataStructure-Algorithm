@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace DivideAndConquer
 {
+    //비주얼라이징 중... 현재 에러있음
     //분할 정복으로 하노이탑 문제 풀기
     public class Hanoi
     {
