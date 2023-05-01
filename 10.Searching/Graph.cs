@@ -40,16 +40,40 @@ namespace Searching
             //listGraph[1].Add(0); // 1번 노드가 0번 노드와연결
             //listGraph[1].Add(3); // 1번 노드가 3번 노드와 연결
             //listGraph[2].Add(0); // 2번 노드가 0번 노드와 연결
+
+
+        }
+
+        //인접 여부 확인
+        //ver = 1 이면 그냥 그래프, 2면 가중치 그래프
+        public bool IsPossibleToMove(int ver, int start, int end)
+        {
+            if (ver == 1)
+            {
+                foreach (int vertex in listGraph[start])
+                {
+                    if (vertex == end)
+                        return true;
+                }
+            }
+            else
+            {
+                foreach ((int item,int weight) in listWeightGraph[start])
+                {
+                    if (item == end)
+                        return true;
+                }
+            }
+            return false;
         }
     }
-
     internal class MatrixGraph
     {
         // <인접행렬 그래프>
         // 그래프 내의 각 정점의 인접 관계를 나타내는 행렬
         // 2차원 배열을 [출발정점, 도착정점] 으로 표현
         // 장점 : 인접여부 접근이 빠름
-        // 단점 : 메모리 사용량이 많음
+        // 단점 : 메모리 사용량이 많음 / Vertex 가 많은데 Edge는 적을때 쓸모없는 데이터가 많아짐
 
         // 양방향 연결 그래프
 
@@ -75,7 +99,7 @@ namespace Searching
             { INF, INF, INF, INF,   0 },
         };
 
-        //움직일 수 있나 확인
+        //인접 여부 확인
         //ver = 1 이면 그냥 그래프, 2면 가중치 그래프
         public bool IsPossibleToMove(int ver,int start, int end)
         {
