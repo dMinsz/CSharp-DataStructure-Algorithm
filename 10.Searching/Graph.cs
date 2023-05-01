@@ -43,7 +43,7 @@ namespace Searching
         }
     }
 
-    public class MatrixGraph
+    internal class MatrixGraph
     {
         // <인접행렬 그래프>
         // 그래프 내의 각 정점의 인접 관계를 나타내는 행렬
@@ -65,7 +65,7 @@ namespace Searching
         // 단방향으로 하고싶으면 true false 로 바꿔주면된다.
 
         // 예시 - 단방향 가중치 그래프 (단절은 최대값으로 표현)
-        const int INF = int.MaxValue;
+        const int INF = int.MaxValue;//임의의 수를 단절로 표현가능 // 보통 -1 이나 최댓값 최소값 등을 씀
         int[,] matrixGraph2 = new int[5, 5]
         {
             {   0, 132, INF, INF,  16 },
@@ -76,15 +76,31 @@ namespace Searching
         };
 
         //움직일 수 있나 확인
-        public bool IsPossibleToMove(int start, int end)
+        //ver = 1 이면 그냥 그래프, 2면 가중치 그래프
+        public bool IsPossibleToMove(int ver,int start, int end)
         {
-            if (matrixGraph1[start, end])
+            if (ver == 1)
             {
-                return true;
+                if (matrixGraph1[start, end])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
-            else
+            else 
             {
-                return false;
+                if (matrixGraph2[start, end] != INF)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }
