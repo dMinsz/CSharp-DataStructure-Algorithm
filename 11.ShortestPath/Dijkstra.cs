@@ -36,7 +36,7 @@ namespace ShortestPath
             for (int i = 0; i < size; i++)
             {
                 cost[i] = graph[start, i];// start 에서 i 즉 모든 노드 에대해서 cost(비용,거리) 저장
-                parent[i] = graph[start, i] < INF ? start : -1;
+                parent[i] = graph[start, i] < INF ? start : -1; // 연결되어있는지 확인
             }
 
             for (int i = 0; i < size; i++)
