@@ -26,7 +26,7 @@ namespace ShortestPath
                 for (int x = 0; x < count; x++)
                 {
                     costTable[y, x] = graph[y, x]; // 모든 비용 일단 복사
-                    parentTable[y, x] = -1;// 첫 값은 모두 -1 로
+                    parentTable[y, x] = (graph[y, x] < INF) ? y : -1;// 스스로의 정점에대한 순환시 정점 본인을 넣어준다.
                 }
             }
 
