@@ -27,7 +27,7 @@
 ![dijkstra1](./Images/DijkstraIamges/Dijkstra-Seting.png)
 이렇게된다.
 
-**Visit 은 현재 정점을 체크했는지를 의미하며 F=false , T = true **
+**Visit 은 현재 정점을 체크했는지를 의미하며 F=false , T = true**
 
 **Cost 는 비용을 의미하며 INFI 는 최대값(무한대)을 의미한다.**
 
@@ -65,9 +65,9 @@
 ![dijkstra6](./Images/DijkstraIamges/dijkstra6.png)
 
 
-ㄴ 1번 정점 탐색시 3번 정점으로 가는 새로운 Cost 가 생겼기때문에
+1번 정점 탐색시 3번 정점으로 가는 새로운 Cost 가 생겼기때문에
    
-   cost를 바꿔주고 path 값도 갱신해준다.
+cost를 바꿔주고 path 값도 갱신해준다.
 
 
 
@@ -159,3 +159,61 @@ path 를 이용해서 역으로 계산을 해보면 0번 정점부터 시작하여
 * 0->7 은 0->4->7
 
 이 된다.
+
+
+위의 내용을 코드로 바꾸면 
+아래처럼 된다.
+
+```cs
+    public class Dijkstra
+    {
+        const int INF = 99999; // max 값으로하면 + 연산을하면 오버플로우되서 일단은 임의의 큰수로 설정
+        public static void ShortestPath(in int[,] graph, in int start, out int[] cost, out int[] parent)
+        {
+            int size = graph.GetLength(0);
+            bool[] visited = new bool[size];//방문 확인용
+            cost = new int[size]; // 거리,비용
+            parent = new int[size];// 방문정점 저장용
+
+            for (int i = 0; i < size; i++)
+            {
+                cost[i] = graph[start, i];// start 에서 i 즉 모든 노드 에대해서 cost(비용,거리) 저장
+                parent[i] = graph[start, i] < INF ? start : -1; // 연결되어있는지 확인
+            }
+
+            for (int i = 0; i < size; i++)
+            {
+                // 1. 방문하지 않은 정점 중 가장 가까운 정점부터 탐색
+                int next = -1;
+                int minCost = INF;
+                for (int j = 0; j < size; j++)
+                {
+                    if (!visited[j] && // 방문하지 않은
+                        cost[j] < minCost) // 가장 작은 정점부터
+                    {
+                        next = j; // 다음 정점으로
+                        minCost = cost[j];// 더작은 값으로 바꿔준다.
+                    }
+                    
+                }
+                if (next < 0)//next 에 가장 가까운 정점이 나오게된다.
+                    break;
+
+                // 2. 직접연결된 거리보다 거쳐서 더 짧아진다면 갱신.
+                for (int j = 0; j < size; j++)
+                {
+                    // cost[j] : 목적지까지 직접 연결된 거리
+                    // cost[next] : 탐색중인 정점까지 거리
+                    // graph[next, j] : 탐색중인 정점부터 목적지의 거리
+                    if (cost[j] > cost[next] + graph[next, j]) //next 가 거쳐가는노드 // 거쳐가는게 더짧을경우
+                    {
+                        cost[j] = cost[next] + graph[next, j];
+                        parent[j] = next;
+                    }
+                    visited[next] = true;
+                }
+
+            }
+        }
+    }
+```
