@@ -22,32 +22,67 @@ namespace _11.ShortestPath
                 { INF,   5, INF,   2, INF, INF, INF, INF,   0}
              };
 
-            int[] distance;
-            int[] path;
-            Dijkstra.ShortestPath(in graph, 0, out distance, out path);
+            int[] cost;
+            int[] parent;
+            Dijkstra.ShortestPath(in graph, 0, out cost, out parent);
             Console.WriteLine("<Dijkstra>");
-            PrintResult(distance, path);
+            PrintResult(cost, parent);
 
+            int[,] costTable;
+            int[,] parentTable;
+            FloydWarshall.ShortestPath(in graph, out costTable, out parentTable);
+            Console.WriteLine("<Floyd-Warshall>");
+            PrintFloydWarshall(costTable, parentTable);
         }
 
-        private static void PrintResult(int[] distance, int[] path)
+        private static void PrintResult(int[] cost, int[] path)
         {
             Console.Write("Vertex");
             Console.Write("\t");
-            Console.Write("dist");
+            Console.Write("cost");
             Console.Write("\t");
-            Console.WriteLine("path");
+            Console.WriteLine("parent");
 
-            for (int i = 0; i < distance.Length; i++)
+            for (int i = 0; i < cost.Length; i++)
             {
                 Console.Write(i);
                 Console.Write("\t");
-                if (distance[i] >= INF)
+                if (cost[i] >= INF)
                     Console.Write("INF");
                 else
-                    Console.Write("{0:D3}", distance[i]);
+                    Console.Write("{0:D3}", cost[i]);
                 Console.Write("\t");
                 Console.WriteLine(path[i]);
+            }
+        }
+
+        private static void PrintFloydWarshall(int[,] costTable, int[,] pathTable)
+        {
+            Console.WriteLine("Cost table");
+            for (int y = 0; y < costTable.GetLength(0); y++)
+            {
+                for (int x = 0; x < costTable.GetLength(1); x++)
+                {
+                    if (costTable[y, x] >= INF)
+                        Console.Write("INF ");
+                    else
+                        Console.Write("{0,3} ", costTable[y, x]);
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Parent table");
+            for (int y = 0; y < pathTable.GetLength(0); y++)
+            {
+                for (int x = 0; x < pathTable.GetLength(1); x++)
+                {
+                    if (pathTable[y, x] < 0)
+                        Console.Write("  X ");
+                    else
+                        Console.Write("{0,3} ", pathTable[y, x]);
+                }
+                Console.WriteLine();
             }
         }
     }
