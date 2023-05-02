@@ -11,6 +11,7 @@
 ><br>[5. 이진탐색트리(Binary Search Tree) ](#이진-탐색-트리)
 ><br>[6. 해시테이블(Hash Table) ](#해시-테이블)
 ><br>[7. 각종 정렬](./Sorts.md)
+><br>[8. 다익스트라 알고리즘](./Dijkstra-Algorithm.md)
 ## 배열과 선형 리스트
 
 ### 1. Array, List, LinkedList 차이는?
