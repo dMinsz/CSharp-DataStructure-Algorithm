@@ -26,17 +26,17 @@ namespace ShortestPath
     internal class Dijkstra
     {
         const int INF = 99999; // max 값으로하면 + 연산을하면 오버플로우되서 일단은 임의의 큰수로 설정
-        public static void ShortestPath(in int[,] graph, in int start, out int[] distance, out int[] path)
+        public static void ShortestPath(in int[,] graph, in int start, out int[] cost, out int[] parent)
         {
             int size = graph.GetLength(0);
             bool[] visited = new bool[size];//방문 확인용
-            distance = new int[size]; // 한번에 가는 경로 저장
-            path = new int[size];// 방문노드 저장용
+            cost = new int[size]; // 거리,비용
+            parent = new int[size];// 방문노드 저장용
 
             for (int i = 0; i < size; i++)
             {
-                distance[i] = graph[start, i];
-                path[i] = graph[start, i] < INF ? start : -1;
+                cost[i] = graph[start, i];// start 에서 i 즉 모든 노드 에대해서 cost(비용,거리) 저장
+                parent[i] = graph[start, i] < INF ? start : -1;
             }
 
             for (int i = 0; i < size; i++)
@@ -47,10 +47,10 @@ namespace ShortestPath
                 for (int j = 0; j < size; j++)
                 {
                     if (!visited[j] && // 방문하지 않은
-                        distance[j] < minCost) // 가장 작은 정점부터
+                        cost[j] < minCost) // 가장 작은 정점부터
                     {
                         next = j; // 다음 정점으로
-                        minCost = distance[j];// 더작은 값으로 바꿔준다.
+                        minCost = cost[j];// 더작은 값으로 바꿔준다.
                     }
                     
                 }
@@ -60,13 +60,13 @@ namespace ShortestPath
                 // 2. 직접연결된 거리보다 거쳐서 더 짧아진다면 갱신.
                 for (int j = 0; j < size; j++)
                 {
-                    // distance[j] : 목적지까지 직접 연결된 거리
-                    // distance[next] : 탐색중인 정점까지 거리
+                    // cost[j] : 목적지까지 직접 연결된 거리
+                    // cost[next] : 탐색중인 정점까지 거리
                     // graph[next, j] : 탐색중인 정점부터 목적지의 거리
-                    if (distance[j] > distance[next] + graph[next, j]) //next 가 거쳐가는노드 // 거쳐가는게 더짧을경우
+                    if (cost[j] > cost[next] + graph[next, j]) //next 가 거쳐가는노드 // 거쳐가는게 더짧을경우
                     {
-                        distance[j] = distance[next] + graph[next, j];
-                        path[j] = next;
+                        cost[j] = cost[next] + graph[next, j];
+                        parent[j] = next;
                     }
                     visited[next] = true;
                 }
