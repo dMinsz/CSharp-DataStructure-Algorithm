@@ -6,23 +6,29 @@ namespace _13.PathFinding
     {
         static void Main(string[] args)
         {
-            bool[,] tileMap = new bool[9, 9]
+            bool[,] tileMap = new bool[11, 11]
             {
-                { false, false, false, false, false, false, false, false, false },
-                { false,  true,  true,  true, false, false, false,  true, false },
-                { false,  true, false,  true, false, false, false,  true, false },
-                { false,  true, false,  true,  true,  true,  true,  true, false },
-                { false,  true, false,  true, false, false, false,  true, false },
-                { false,  true, false,  true, false, false, false,  true, false },
-                { false, false, false, false, false, false, false,  true, false },
-                { false,  true,  true,  true,  true,  true,  true,  true, false },
-                { false, false, false, false, false, false, false, false, false },
+                { false, false, false, false, false, false, false, false, false, false, false },
+                { false, true, true, true, true, true, true, true, true,true, false },
+                { false, true, true, true, true, false,  false,  true, true,true, false },
+                { false, true, true, true, true, false,  true,  true, true ,true, false},
+                 { false, true, true, true, true, false,  true,  true, true ,true, false},
+                 { false, true, true, true, true, false,  true,  true, true ,true, false},
+                 { false, true, true, true, true, false,  true,  true, true ,true, false},
+                 { false, true, true, true, true, false,  true,  true, true ,true, false},
+                 { false, true, true, true, true, false,  true,  true, true ,true, false},
+                 { false, true, true, true, true, false,  true,  true, true ,true, false},
+                 { false, false, false, false, false, false, false, false, false, false, false },
             }; // true면 갈수있는 곳 false 면 못가는곳
             List<Point> path;
 
             //1,1 에서 1,7 까지 가는 경로탐색
-            AStar.PathFinding(tileMap, new Point(1, 1), new Point(1, 7), out path);
-            PrintResult(tileMap, path);
+            //AStar.PathFinding(tileMap, new Point(3, 3), new Point(7, 8), out path);
+            //PrintResult(tileMap, path);
+
+            Qube[,] visualQubes;
+            AStarVisualizer.PathFinding(tileMap, new Point(3, 3), new Point(7, 8), out path, out visualQubes);
+            AStarVisualizer.VisaulizePrint(visualQubes,11,11);
         }
         //test code
         static void PrintResult(in bool[,] tileMap, in List<Point> path)
