@@ -17,9 +17,10 @@ namespace _13.PathFinding
                 { false, false, false, false, false, false, false,  true, false },
                 { false,  true,  true,  true,  true,  true,  true,  true, false },
                 { false, false, false, false, false, false, false, false, false },
-            };
+            }; // true면 갈수있는 곳 false 면 못가는곳
             List<Point> path;
 
+            //1,1 에서 1,7 까지 가는 경로탐색
             AStar.PathFinding(tileMap, new Point(1, 1), new Point(1, 7), out path);
             PrintResult(tileMap, path);
         }
@@ -31,24 +32,24 @@ namespace _13.PathFinding
             {
                 for (int x = 0; x < pathMap.GetLength(1); x++)
                 {
-                    if (tileMap[y, x])
+                    if (tileMap[y, x]) // true면
                         pathMap[y, x] = ' ';
-                    else
+                    else // 갈수있는 곳이 아니면 //false 면
                         pathMap[y, x] = 'X';
                 }
             }
 
             foreach (Point point in path)
             {
-                pathMap[point.y, point.x] = '*';
+                pathMap[point.y, point.x] = '*'; // 이동경로를 * 로 표시
             }
 
             Point start = path.First();
             Point end = path.Last();
-            pathMap[start.y, start.x] = 'S';
-            pathMap[end.y, end.x] = 'E';
+            pathMap[start.y, start.x] = 'S'; // 시작지점을 S 로 지정
+            pathMap[end.y, end.x] = 'E'; // 끝나는지점을 E 로 지정
 
-            for (int i = 0; i < pathMap.GetLength(0); i++)
+            for (int i = 0; i < pathMap.GetLength(0); i++) // pathMap 모두 순회하면서 출력
             {
                 for (int j = 0; j < pathMap.GetLength(1); j++)
                 {
