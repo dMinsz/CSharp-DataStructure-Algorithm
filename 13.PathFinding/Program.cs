@@ -20,6 +20,15 @@ namespace _13.PathFinding
                  { false, true, true, true, true, false,  true,  true, true ,true, false},
                  { false, false, false, false, false, false, false, false, false, false, false },
             }; // true면 갈수있는 곳 false 면 못가는곳
+
+
+            bool[,] tileMap2 = new bool[3, 3]
+        {
+               {false,false,false },
+               {false,true,true },
+               {false,false,false },
+        };
+
             List<Point> path;
 
             //1,1 에서 1,7 까지 가는 경로탐색
@@ -27,8 +36,11 @@ namespace _13.PathFinding
             //PrintResult(tileMap, path);
 
             Qube[,] visualQubes;
-            AStarVisualizer.PathFinding(tileMap, new Point(3, 3), new Point(7, 8), out path, out visualQubes);
-            AStarVisualizer.VisaulizePrint(visualQubes,11,11);
+            //AStarVisualizer.PathFinding(tileMap, new Point(3, 3), new Point(7, 8), out path, out visualQubes);
+            //AStarVisualizer.VisaulizePrint(visualQubes,11,11);
+
+            AStarVisualizer.PathFinding(tileMap2, new Point(1, 1), new Point(2, 1), out path, out visualQubes);
+            AStarVisualizer.VisaulizePrint(visualQubes, 3, 3);
         }
         //test code
         static void PrintResult(in bool[,] tileMap, in List<Point> path)

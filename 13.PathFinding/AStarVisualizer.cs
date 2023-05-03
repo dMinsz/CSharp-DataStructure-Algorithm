@@ -37,6 +37,7 @@ namespace PathFinding
         public string h;
         public string bottom;
 
+        private int stringsize = 14;
         public Qube()
         {
             top = "---------";
@@ -44,15 +45,17 @@ namespace PathFinding
             g = $"|F=\t|";
             h = $"|F=\t|";
             bottom = "---------";
+            padLeft();
 
         }
-            public Qube(ASNode? node)
+        public Qube(ASNode? node)
         {
             top = "---------";
             f = $"|F={node.f}|";
             g = $"|F={node.g}|";
             h = $"|F={node.h}|";
             bottom = "---------";
+            padLeft();
         }
 
         public void Set(ASNode? node)
@@ -65,7 +68,7 @@ namespace PathFinding
                 h = $"|F=\t|";
                 bottom = "---------";
             }
-            else 
+            else
             {
                 top = "---------";
                 f = $"|F={node.f}|";
@@ -73,24 +76,34 @@ namespace PathFinding
                 h = $"|F={node.h}|";
                 bottom = "---------";
             }
+            padLeft();
         }
-       
-            public void Visit() // 방문시 변화
+
+        public void Visit() // 방문시 변화
         {
             top = "*********";
             f = $"*F={f}*";
             g = $"*F={g}*";
             h = $"*F={h}*";
             bottom = "*********";
+            padLeft();
         }
 
         public void Select() // 선택됬을때
         {
-            top = "##############";
-            f = $"#F={f}#";
-            g = $"#F={g}#";
-            h = $"#F={h}#";
-            bottom = "##############";
+            top = "000000000";
+            f = $"0F={f}0";
+            g = $"0F={g}0";
+            h = $"0F={h}0";
+            bottom = "000000000";
+            padLeft();
+        }
+
+        private void padLeft()
+        {
+            f = f.PadLeft(Math.Abs(9 - f.Length));
+            g = g.PadLeft(Math.Abs(9 - g.Length));
+            h = h.PadLeft(Math.Abs(9 - h.Length));
         }
     }
     internal class AStarVisualizer
@@ -107,14 +120,14 @@ namespace PathFinding
 			// new Point( +1, -1 )		    // 우하
 		}; // 방향을 위해 사용
 
-       
+
         const int CostStraight = 10; // 상하좌우 를 10으로 가중치를 가정
         const int CostDiagonal = 14; // 대각선 // 루트 2 의 대략적인 값 의 가중치이다 // 피타고라스 법칙, 유클리드 거리 
                                      //이러한 가중치를 사용하면 맨해탄 거리 계산의 의해서 많은 수의 Path를 볼 필요가 없어진다.
 
 
         //탐색 성공시 true , 실패시 false
-        public static bool PathFinding(in bool[,] tileMap, in Point start, in Point end, out List<Point> path , out Qube[,] visualQubes)
+        public static bool PathFinding(in bool[,] tileMap, in Point start, in Point end, out List<Point> path, out Qube[,] visualQubes)
         {
             int ySize = tileMap.GetLength(0); // 첫 차원을 y값으로 사용
             int xSize = tileMap.GetLength(1);
@@ -142,7 +155,7 @@ namespace PathFinding
             nodes[startNode.point.y, startNode.point.x] = startNode;
 
             visualQubes[startNode.point.y, startNode.point.x].Set(startNode);
-            
+
             nextPointPQ.Enqueue(startNode, startNode.f);
 
             while (nextPointPQ.Count > 0) //휴리스틱 값이 있을때 // 다음 경로로 이동가능할때
@@ -213,7 +226,7 @@ namespace PathFinding
                         nextPointPQ.Enqueue(newNode, newNode.f);
 
                         //visualize
-                        visualQubes[y,x].Set(newNode);
+                        visualQubes[y, x].Set(newNode);
                         visualQubes[y, x].Visit();
                     }
                 }
@@ -236,62 +249,86 @@ namespace PathFinding
             return CostStraight * (int)Math.Sqrt(xSize * xSize + ySize * ySize);
         }
 
-        public static void VisaulizePrint(in Qube[,] visualQubes , int maxY, int maxX)
+        public static void VisaulizePrint(in Qube[,] visualQubes, int maxY, int maxX)
         {
-            int y = 0;
-            int x = 0;
-            while (y < maxY)
+
+            for (int y = 0; y < visualQubes.GetLength(0); y++)
             {
-                Console.Write(visualQubes[y, x].top + "\t");
-                y++;
-                x++;
+                for (int x = 0; x < visualQubes.GetLength(1); x++)
+                {
+                    VisaulizePrintLine(visualQubes.GetLength(0), visualQubes[y, x].top);
+                    VisaulizePrintLine(visualQubes.GetLength(0), visualQubes[y, x].f);
+                    VisaulizePrintLine(visualQubes.GetLength(0), visualQubes[y, x].g);
+                    VisaulizePrintLine(visualQubes.GetLength(0), visualQubes[y, x].h);
+
+                    Console.WriteLine();
+                }
             }
-            Console.WriteLine();
+            
+
+            //int y = 0;
+            //int x = 0;
+            //while (y < maxY)
+            //{
+            //    Console.Write(visualQubes[y, x].top + " ");
+            //    y++;
+            //    x++;
+            //}
+            //Console.WriteLine();
 
 
-            y = 0;
-            x = 0;
-            while (y < maxY)
-            {
-                Console.Write(visualQubes[y, x].f + " ");
-                y++;
-                x++;
-            }
-            Console.WriteLine();
+            //y = 0;
+            //x = 0;
+            //while (y < maxY)
+            //{
+            //    Console.Write(visualQubes[y, x].f + " ");
+            //    y++;
+            //    x++;
+            //}
+            //Console.WriteLine();
 
-            y = 0;
-            x = 0;
-            while (y < maxY)
-            {
-                Console.Write(visualQubes[y, x].g + " ");
-                y++;
-                x++;
-            }
-            Console.WriteLine();
+            //y = 0;
+            //x = 0;
+            //while (y < maxY)
+            //{
+            //    Console.Write(visualQubes[y, x].g + " ");
+            //    y++;
+            //    x++;
+            //}
+            //Console.WriteLine();
 
-            y = 0;
-            x = 0;
-            while (y < maxY)
-            {
-                Console.Write(visualQubes[y, x].h + " ");
-                y++;
-                x++;
-            }
-            Console.WriteLine();
+            //y = 0;
+            //x = 0;
+            //while (y < maxY)
+            //{
+            //    Console.Write(visualQubes[y, x].h + " ");
+            //    y++;
+            //    x++;
+            //}
+            //Console.WriteLine();
 
-            y = 0;
-            x = 0;
-            while (y < maxY)
-            {
-                Console.Write(visualQubes[y, x].bottom + "\t");
-                y++;
-                x++;
-            }
-            Console.WriteLine();
+            //y = 0;
+            //x = 0;
+            //while (y < maxY)
+            //{
+            //    Console.Write(visualQubes[y, x].bottom + " ");
+            //    y++;
+            //    x++;
+            //}
+            //Console.WriteLine();
 
         }
+        public static void VisaulizePrintLine(int max,string line) 
+        {
+            for (int i = 0; i < max; i++)
+            {
+                line.PadLeft(Math.Abs(9 - line.Length));
+                Console.Write(line+" ");
+            }
+        }
+
     }
 
-   
+
 }
 
