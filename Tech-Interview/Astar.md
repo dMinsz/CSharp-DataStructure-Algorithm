@@ -1,52 +1,52 @@
 # A* Algoritm
 
-## ±âº» ¾Ë°í¸®Áò
+## ê¸°ë³¸ ì•Œê³ ë¦¬ì¦˜
 
-´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®ÁòÀ» È®ÀåÇÏ¿© ¸¸µç ÃÖ´Ü°æ·Î Å½»ö¾Ë°í¸®Áò
+ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜ì„ í™•ìž¥í•˜ì—¬ ë§Œë“  ìµœë‹¨ê²½ë¡œ íƒìƒ‰ì•Œê³ ë¦¬ì¦˜
 
-°æ·Î Å½»öÀÇ ¿ì¼±¼øÀ§¸¦ µÎ°í À¯¸ÁÇÑ ÇØºÎÅÍ ¿ì¼±ÀûÀ¸·Î Å½»ö
+ê²½ë¡œ íƒìƒ‰ì˜ ìš°ì„ ìˆœìœ„ë¥¼ ë‘ê³  ìœ ë§í•œ í•´ë¶€í„° ìš°ì„ ì ìœ¼ë¡œ íƒìƒ‰
 
-### °æ·ÎÀÇ ¿ì¼±¼øÀ§¸¦ µÎ´Â¹ý (°æ·Î Ã¤Á¡)
+### ê²½ë¡œì˜ ìš°ì„ ìˆœìœ„ë¥¼ ë‘ëŠ”ë²• (ê²½ë¡œ ì±„ì )
 
 F = G+H
 
-G - ½ÃÀÛÁ¡ À¸·Î ºÎÅÍ ÇöÀç ÁöÁ¤µÈ À§Ä¡±îÁö °É¸®´Â ºñ¿ë
+G - ì‹œìž‘ì  ìœ¼ë¡œ ë¶€í„° í˜„ìž¬ ì§€ì •ëœ ìœ„ì¹˜ê¹Œì§€ ê±¸ë¦¬ëŠ” ë¹„ìš©
 
-H - ÇöÀç À§Ä¡ ¿¡¼­ ºÎÅÍ ¸ñÀûÁö ±îÁöÀÇ ¿¹»ó ºñ¿ë
+H - í˜„ìž¬ ìœ„ì¹˜ ì—ì„œ ë¶€í„° ëª©ì ì§€ ê¹Œì§€ì˜ ì˜ˆìƒ ë¹„ìš©
 
-F - ÇöÀç ±îÁö ÀÌµ¿¿¡ °É¸° ºñ¿ë + ÇöÀç À§Ä¡ºÎÅÍ ¸ñÀûÁö±îÁöÀÇ ¿¹»ó ºñ¿ë
+F - í˜„ìž¬ ê¹Œì§€ ì´ë™ì— ê±¸ë¦° ë¹„ìš© + í˜„ìž¬ ìœ„ì¹˜ë¶€í„° ëª©ì ì§€ê¹Œì§€ì˜ ì˜ˆìƒ ë¹„ìš©
 
-**Áï F °ªÀÌ ³·Àº°ÅºÎÅÍ Å½»öÇÑ´Ù.**
+**ì¦‰ F ê°’ì´ ë‚®ì€ê±°ë¶€í„° íƒìƒ‰í•œë‹¤.**
 
-> ÀÚ¼¼ÇÑ ¼³¸íÀº ÄÚµå¿¡ ÀÖÀ¸´Ï È®ÀÎ
+> ìžì„¸í•œ ì„¤ëª…ì€ ì½”ë“œì— ìžˆìœ¼ë‹ˆ í™•ì¸
 
-## ºñÁÖ¾ó ¶óÀÌÂ¡
+## ë¹„ì£¼ì–¼ ë¼ì´ì§•
 
-ÇØ´çÄÚµå´Â ¾Æ·¡ÀÇ ¸µÅ©¸¦ µû¶ó°¡¸éÀÖ´Ù.
+í•´ë‹¹ì½”ë“œëŠ” ì•„ëž˜ì˜ ë§í¬ë¥¼ ë”°ë¼ê°€ë©´ìžˆë‹¤.
 
-[ÄÚµåº¸±â](#https://github.com/dMinsz/CSharp-DataStructure-Algorithm/blob/master/13.PathFinding/AStarVisualizer.cs)
+[ì½”ë“œë³´ê¸°](https://github.com/dMinsz/CSharp-DataStructure-Algorithm/blob/master/13.PathFinding/AStarVisualizer.cs)
 
 
 ![astar1](./Images/PathFinding/Astar-0.png)
 
-½ÃÀÛ½Ã ½ÃÀÛÁöÁ¡°ú ¸ñÀûÁö¸¦ Á¤ÇØÁØ´Ù.
+ì‹œìž‘ì‹œ ì‹œìž‘ì§€ì ê³¼ ëª©ì ì§€ë¥¼ ì •í•´ì¤€ë‹¤.
 
-ÆÄ¶õ»öÀº º®À» ÀÇ¹ÌÇÏ¸ç , ÃÊ·Ï»öÀÌ ¸ñÀûÁö , ÇÏ´Ã»öÀÌ ½ÃÀÛÁöÁ¡ÀÌ´Ù
+íŒŒëž€ìƒ‰ì€ ë²½ì„ ì˜ë¯¸í•˜ë©° , ì´ˆë¡ìƒ‰ì´ ëª©ì ì§€ , í•˜ëŠ˜ìƒ‰ì´ ì‹œìž‘ì§€ì ì´ë‹¤
 
 
 ![astar2](./Images/PathFinding/Astar-1.png)
 
-»óÇÏ ÁÂ¿ì¸¦ ±âÁØÀ¸·Î Å½»öÇÏ°Ô ¸¸µé¾úÀ¸¸ç
+ìƒí•˜ ì¢Œìš°ë¥¼ ê¸°ì¤€ìœ¼ë¡œ íƒìƒ‰í•˜ê²Œ ë§Œë“¤ì—ˆìœ¼ë©°
 
-°¢°¢ÀÇ ¿ì¼±¼øÀ§¸¦ Ã¼Å©ÇÏ¸ç ¸ÕÀú È®ÀÎÇØ¾ßÇÒ ºÎºÐ ºÎÅÍ Å½»öÀ» ½ÃµµÇÑ´Ù.
+ê°ê°ì˜ ìš°ì„ ìˆœìœ„ë¥¼ ì²´í¬í•˜ë©° ë¨¼ì € í™•ì¸í•´ì•¼í•  ë¶€ë¶„ ë¶€í„° íƒìƒ‰ì„ ì‹œë„í•œë‹¤.
 
 
 ![astar3](./Images/PathFinding/Astar-2.png)
 
-µÎ¹øÁ¤µµ Å½»öÀ» ´õ ½ÃµµÇÑ °á°úÀÌ¸ç
+ë‘ë²ˆì •ë„ íƒìƒ‰ì„ ë” ì‹œë„í•œ ê²°ê³¼ì´ë©°
 
-¹æ¹®¸¸ Çß´ø °÷°ú ÀÌµ¿ÇØº» °÷À» ±¸º°ÇÏ±âÀ§ÇØ ÁøÇÑ ÇÏ´Ã»öÀ» ÀÌ¿ëÇß´Ù.
+ë°©ë¬¸ë§Œ í–ˆë˜ ê³³ê³¼ ì´ë™í•´ë³¸ ê³³ì„ êµ¬ë³„í•˜ê¸°ìœ„í•´ ì§„í•œ í•˜ëŠ˜ìƒ‰ì„ ì´ìš©í–ˆë‹¤.
 
 ![astar3](./Images/PathFinding/Astar-3.png)
 
-Å½»öÀÌ ¿Ï·áµÇ¸é ³ë¶õ»öÀ¸·Î ¿Ï¼ºµÈ ±æÀ» º¸¿©ÁØ´Ù.
+íƒìƒ‰ì´ ì™„ë£Œë˜ë©´ ë…¸ëž€ìƒ‰ìœ¼ë¡œ ì™„ì„±ëœ ê¸¸ì„ ë³´ì—¬ì¤€ë‹¤.
