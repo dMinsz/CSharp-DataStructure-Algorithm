@@ -12,6 +12,7 @@
 ><br>[6. 해시테이블(Hash Table) ](#해시-테이블)
 ><br>[7. 각종 정렬](./Sorts.md)
 ><br>[8. 다익스트라 알고리즘](./Dijkstra-Algorithm.md)
+><br>[9. A* 알고리즘](./Astar.md)
 ## 배열과 선형 리스트
 
 ### 1. Array, List, LinkedList 차이는?
