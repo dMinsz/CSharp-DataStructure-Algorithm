@@ -26,6 +26,12 @@ F - 현재 까지 이동에 걸린 비용 + 현재 위치부터 목적지까지�
 
 [코드보기](https://github.com/dMinsz/CSharp-DataStructure-Algorithm/blob/master/13.PathFinding/AStarVisualizer.cs)
 
+**주의:**
+1. 상하좌우 기준으로 탐색을 하며 대각선 으로 직접 탐색 하지 않는다. 
+2. F 값이 같을때 H값이 작은거 부터 탐색하는 건 구현 하지 않았다.(조금 비효율적일 수 있음)
+>휴리스틱은  10 * (int)Math.Sqrt(xSize * xSize + ySize * ySize) 를 통해 구했으며 대각선을 이용할때는 14를 곱해주면됩니다.(근사치)
+><br>필요하면 코드를 조금 바꾸면 가능하니 코드 이용하기 바람
+
 
 ![astar1](./Images/PathFinding/Astar-0.png)
 
