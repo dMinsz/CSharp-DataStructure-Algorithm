@@ -125,6 +125,24 @@ namespace RogueLike
 
             Datas.map[end.y, end.x] = Datas.Tile.NEXTSTAGE;
 
+
+            for (int i = 0; i < Datas.level * 2; i++) // 레벨에 * 2 로나온다.
+            {
+                Slime slime = new Slime();
+                slime.pos = mapGenerator.GetRandomRoom();
+                Datas.monsters.Add(slime);
+            }
+
+            for (int i = 0; Datas.level > 2 && i < Datas.level - 1 ; i++) //3~5레벨 까지 드래곤이 등장한다. 각각 2,3,4 마리 등장
+            {
+                Dragon dragon = new Dragon();
+                dragon.pos = new Position(12, 12);
+                Datas.monsters.Add(dragon);
+            }
+
+
+
+
             //window version check
             OperatingSystem os = Environment.OSVersion;
             var windowVersion = os.Version.Major;
@@ -137,19 +155,24 @@ namespace RogueLike
 
         private void PrintMap()
         {
-            //StringBuilder sb = new StringBuilder();
-            //Console.ForegroundColor = ConsoleColor.White;
 
 
             //자동생성 테스트
             mapGenerator.PrintMap();
 
-            //foreach (Monster monster in Datas.monsters)
-            //{
-            //    Console.ForegroundColor = ConsoleColor.Green;
-            //    Console.SetCursorPosition(monster.pos.x * sizeX, monster.pos.y);
-            //    Console.Write(monster.icon);
-            //}
+            foreach (Monster monster in Datas.monsters)
+            {
+                if (monster.name == "드래곤")
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else 
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                Console.SetCursorPosition(monster.pos.x * sizeX, monster.pos.y);
+                Console.Write(monster.icon);
+            }
 
             //foreach (Item item in Data.items)
             //{
@@ -167,12 +190,22 @@ namespace RogueLike
         {
             Console.ForegroundColor = ConsoleColor.White;
             (int left, int top) pos = Console.GetCursorPosition();
-            Console.SetCursorPosition(Datas.map.GetLength(1) * sizeX + 3, 1);
+
+
+            Console.SetCursorPosition(Datas.map.GetLength(1) * sizeX + 3, 0);
+            Console.Write($"현재 스테이지 레벨 : {Datas.level}");
+            Console.SetCursorPosition(Datas.map.GetLength(1) * sizeX + 3, 2);
             Console.Write("메뉴 : Q");
-            Console.SetCursorPosition(Datas.map.GetLength(1) * sizeX + 3, 3);
-            Console.Write("이동 : 방향키");
             Console.SetCursorPosition(Datas.map.GetLength(1) * sizeX + 3, 4);
+            Console.Write("이동 : 방향키");
+            Console.SetCursorPosition(Datas.map.GetLength(1) * sizeX + 3, 5);
             Console.Write("인벤토리 : I");
+
+            Console.SetCursorPosition(Datas.map.GetLength(1) * sizeX + 3, 7);
+            Console.Write("P:캐릭터");
+            Console.SetCursorPosition(Datas.map.GetLength(1) * sizeX + 3, 8);
+            Console.Write("◈:다음 스테이지로 이동");
+
         }
 
         private void PrintInfo()
@@ -180,6 +213,12 @@ namespace RogueLike
             Console.SetCursorPosition(0, Datas.map.GetLength(0) + 1);
             Console.Write($"HP : {Datas.player.CurHp,3}/{Datas.player.MaxHp,3}\t");
             Console.Write($"EXP : {Datas.player.CurExp,3}/{Datas.player.MaxExp,3}");
+
+            Console.SetCursorPosition(0,Datas.map.GetLength(0) + 3);
+            Console.Write("현재 콘솔 문제때문에 정확한 위치가 아닐 수 도있습니다.");
+
+            Console.SetCursorPosition(0, Datas.map.GetLength(0) + 4);
+            Console.Write("잘 비벼서 지나가세요");
         }
     }
 }

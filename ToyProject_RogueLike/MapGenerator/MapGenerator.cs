@@ -428,7 +428,7 @@ namespace RogueLike.GMap
                             sb.Append($"{"",2}");
                             break;
                         case Datas.Tile.NEXTSTAGE: // 방
-                            sb.Append($"{"◎",2}");
+                            sb.Append($"{"◈",2}");
                             break;
                     }
                 }

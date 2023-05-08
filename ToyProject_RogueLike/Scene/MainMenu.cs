@@ -9,9 +9,24 @@ namespace RogueLike
     public class MainMenu : Scene
     {
         public MainMenu(GameManager game) : base(game) { }
+
+        public void Title(StringBuilder sb) 
+        {
+            sb.AppendLine("______                             _      _____  _   __ _____ ");
+            sb.AppendLine("| ___ \\                           | |    |_   _|| | / /|  ___|");
+            sb.AppendLine("| |_/ /  ___    __ _  _   _   ___ | |      | |  | |/ / | |__  ");
+            sb.AppendLine("|    /  / _ \\  / _` || | | | / _ \\| |      | |  |    \\ |  __| ");
+            sb.AppendLine("| |\\ \\ | (_) || (_| || |_| ||  __/| |____ _| |_ | |\\  \\| |___ ");
+            sb.AppendLine("\\_| \\_| \\___/  \\__, | \\__,_| \\___|\\_____/ \\___/ \\_| \\_/\\____/ ");
+            sb.AppendLine("                __/ |                                         ");
+            sb.AppendLine("               |___/                                          ");
+        }
         public override void Render()
         {
             StringBuilder sb = new StringBuilder();
+
+            Title(sb);
+
 
             sb.AppendLine("1. 게임시작");
             sb.AppendLine("2. 게임종료");
